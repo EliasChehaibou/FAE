@@ -1,12 +1,42 @@
 import React, {useState, useEffect} from 'react'
+import "./Navbar.css"
 
-export default function () {
+export default function Navbar() {
+
+  const [toggleMenu, setToggleMenu] = useState(false);
+  const [largeur, setLargeur] = useState(window.innerWidth)
+
+  const toggleNavSmallScreen = () => {
+    setToggleMenu(!toggleMenu);
+  }
+
+  useEffect( () => {
+
+      const changeWidth = () => {
+        setLargeur(window.innerWidth);
+        if (window.innerWidth>500){
+          setToggleMenu(false);
+        }
+      }
+
+      window.addEventListener('resize', changeWidth);
+
+      return () => {
+        window.removeEventListener('resize', changeWidth);
+      }
+
+  }, [])
+
   return (
-    <nav className='liste'>
-        <ul className='items'>Acceuil</ul>
-        <ul className='items'>Catégories</ul>
-        <ul className='items'>S'inscrire</ul>
-        <button className='btn'>Déplier</button>
+    <nav>
+      {(toggleMenu || largeur>500) && (
+        <ul className='liste'>
+          <li className='items'>Acceuil</li>
+          <li className='items'>Catégories</li>
+          <li className='items'>S'inscrire</li>
+        </ul>
+        )}
+        <button onClick={toggleNavSmallScreen} className='btn'>Déplier</button>
     </nav>
   )
 }
