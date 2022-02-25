@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import {Route, Routes} from 'react-router-dom'
 import Navbar from './Navbar/Navbar'
 import "./App.css"
-import Home from './pages/Home'
-import NotFound from './pages/NotFound'
+import Home from './pages/Home/Home'
+import NotFound from './pages/NotFound/NotFound'
 
 function App() {
   /*const [msg,setMsg] = useState('')

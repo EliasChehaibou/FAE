@@ -1,10 +1,10 @@
 nav {
     height: 50px;
-    background: linear-gradient(45deg, rgb(156,14,156),midnightblue);
+    background-color: #333;
 }
 .liste{
     list-style-type: none;
-    background: linear-gradient(45deg, rgb(156,14,156),midnightblue);
+    background-color: #333;
     height: 100%;
     display: flex;
     justify-content: center;

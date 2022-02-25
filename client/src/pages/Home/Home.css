@@ -1,0 +1,10 @@
+.titre {
+    text-align: center;
+}
+
+.rech {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
