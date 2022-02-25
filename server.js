@@ -8,11 +8,11 @@ const app = express()
 
 app.use(express.json())
 
-app.get('/api/fae', (_,res) => {
+/*app.get('/api/fae', (_,res) => {
     res.send({
         msg: "Chez FAE on a tout ce qu'on veut!"
     })
-})
+})*/
 
 app.listen(PORT, () => {
     console.log(`le serveur est lancé sur le port: ${PORT}`)

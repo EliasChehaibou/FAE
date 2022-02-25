@@ -1,24 +1,27 @@
 import React, {useState} from 'react'
+import {Route, Routes} from 'react-router-dom'
 import Navbar from './Navbar/Navbar'
+import "./App.css"
+import Home from './pages/Home'
+import NotFound from './pages/NotFound'
 
 function App() {
-  const [msg,setMsg] = useState('')
+  /*const [msg,setMsg] = useState('')
   const handleClick = async () => {
     const data = await window.fetch('/api/fae')
     const json = await data.json()
     const msg = json.msg
 
     setMsg(msg)
-  }
+  }*/
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Navbar/>
-        <button onClick={handleClick}>FAE</button>
-        <p>{msg}</p>
-      </header>
-    </div>
+    <div className='App'>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+    </div>   
   );
 }
 
