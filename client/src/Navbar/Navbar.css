@@ -50,4 +50,7 @@ nav {
         color: #8a2119;
         cursor: pointer;
     }
+    nav {
+        height: 200px;
+    }
 }

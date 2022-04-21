@@ -34,7 +34,7 @@ export default function Navbar() {
         <ul className='liste'>
           <li className='items'><Link to="/" className='link'>Acceuil</Link></li>
           <li className='items'><Link to="/categories" className='link'>Catégories</Link></li>
-          <li className='items'><Link to="/signin" className='link'>S'inscire</Link></li>
+          <li className='items'><Link to="/inscription" className='link'>S'inscrire</Link></li>
         </ul>
         )}
         <button onClick={toggleNavSmallScreen} className='btn'>Déplier</button>

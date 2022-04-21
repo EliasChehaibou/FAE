@@ -9,14 +9,12 @@ const Home = () => {
                 <img src='/static/logo.png' alt="Foncez aux enchères" className='img'/>
             </div>
             
-            <h1 className='titre'>Chez FAE on a tout ce qu'on veut !</h1>
-            <Navbar/>
-            <div className='rech'>
+            <h1 className='titre'>Chez FAE on a tout ce qu'on veut !</h1>      
+                 <Navbar/>
+                <div className='rech'>
                 <input className='input' placeholder='Rechercher ici ce que vous voulez...'/>
                 <button className='btn_rech'>Rechercher</button>
-            </div>
-            
-           
+                </div>
         </div>
     );
 };

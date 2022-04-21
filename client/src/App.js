@@ -4,6 +4,7 @@ import Navbar from './Navbar/Navbar'
 import "./App.css"
 import Home from './pages/Home/Home'
 import NotFound from './pages/NotFound/NotFound'
+import Inscription from './pages/Inscription/Inscription'
 
 function App() {
   /*const [msg,setMsg] = useState('')
@@ -19,6 +20,7 @@ function App() {
     <div className='App'>
         <Routes>
           <Route exact path="/" element={<Home />} />
+          <Route exact path="/inscription" element={<Inscription />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
     </div>   
