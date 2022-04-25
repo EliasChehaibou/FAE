@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
 import {Route, Routes} from 'react-router-dom'
-import Navbar from './Navbar/Navbar'
 import "./App.css"
 import Home from './pages/Home/Home'
 import NotFound from './pages/NotFound/NotFound'
 import Inscription from './pages/Inscription/Inscription'
+import Categories from './pages/Categories/Categories'
+import Recherche from './pages/Recherche/Recherche'
 
 function App() {
   /*const [msg,setMsg] = useState('')
@@ -21,6 +22,8 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/inscription" element={<Inscription />} />
+          <Route exact path="/categories" element={<Categories />} />
+          <Route exact path="/recherche" element={<Recherche />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
     </div>   

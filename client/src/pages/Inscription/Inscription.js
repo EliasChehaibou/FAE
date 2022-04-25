@@ -9,7 +9,7 @@ const Inscription = () => {
     }
         
     function Verification() {
-        // Récupérer lavaleur des champs nom et email
+        // Récupérer la valeur des champs nom et email
         var Nom = document.getElementById('nom').value;
         var Email = document.getElementById('email').value;
         
