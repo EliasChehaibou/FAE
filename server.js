@@ -105,3 +105,13 @@ app.get('/search/annonces/rechcate', function (req, res) {
       res.send(JSON.stringify(results));
       });
   });
+
+  // formulaire d'inscription
+  app.post('/inscription', function (req, res) {
+    var params = req.query;
+    console.log(params);
+    /*connection.query('INSERT INTO utilisateur SET ?', params, function (error, results, fields) { 
+      if (error) throw error;
+      res.end(JSON.stringify(results));
+    });*/
+  });

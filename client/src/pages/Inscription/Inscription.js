@@ -12,30 +12,11 @@ const Inscription = () => {
         // Récupérer la valeur des champs nom et email
         var Nom = document.getElementById('nom').value;
         var Email = document.getElementById('email').value;
-        
-        // Contrôle sur le nom
-        if(Nom==''){
-            alert('Vous devez compléter votre nom !');
-            document.getElementById('nom').style.backgroundColor="red";
-            document.getElementById('nom').style.color="#FFF";
-            
-            // Permet de bloquer l'envoi du formulaire
-            return false;
-        }
-        else{
-            document.getElementById('nom').style.backgroundColor="#9C6";
-        }
-        
+
         // Contrôle sur l'email
         if(Email=='' || !validateEmail(Email)) {
-            alert('Vous devez compléter votre adresse email');
             document.getElementById('email').style.backgroundColor="red";
             document.getElementById('email').style.color="#FFF";
-            return false;
-        }
-        
-        else{
-            document.getElementById('email').style.backgroundColor="#9C6";
         }
     }
 
@@ -43,9 +24,9 @@ const Inscription = () => {
         <div className='Inscription'>  
             <Navbar/>
             <p>Formulaire d'inscription</p>
-            <form name='form' action='' method='post' onSubmit={Verification} className='Form'>          
-                <label for="nom">Nom</label>
-                <input type="text" id="nom"/>
+            <form name='form' action='http://localhost:2000/inscription' method='post' onSubmit={Verification} className='Form'>          
+                <label for="nom">Nom*</label>
+                <input type="text" id="nom" required/>
                 <label for="prenom">Prénom</label>
                 <input type="text" id="prenom"/>
                 <label for="sexe">Sexe</label>
@@ -55,11 +36,12 @@ const Inscription = () => {
                 </select>
                 <label for="ddn">Date de naissance</label>
                 <input type="date" id="ddn" min="1908-08-08" max="2022-01-01"/>
-                <label for="email">E-mail</label>
-                <input type="text" id="email"/>
+                <label for="email">E-mail*</label>
+                <input type="text" id="email" required/>
                 <label for="phone">Numéro de téléphone</label>
                 <input type="text" id="phone"/>
                 <input type='submit' value='Enregistrer'/>
+                <p>*Champs obligatoires</p>
             </form>
         </div>
         
