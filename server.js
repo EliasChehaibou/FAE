@@ -12,7 +12,7 @@ var connection
 var dbhost = process.env.DB_HOST || 'localhost'
 var dbuser = process.env.DB_USER || 'root'
 var dbpassword = process.env.DB_PASSWORD || ''
-var dbname = process.env.DB_NAME || 'ebey'
+var dbname = process.env.DB_NAME || 'fae_database'
 var dev_database_url = 'mysql://'+dbuser+':'+dbpassword+'@'+dbhost+'/'+dbname
 
 
@@ -39,6 +39,7 @@ function handleMysqlContext() {
 handleMysqlContext()
 
 app.use(cors())
+app.use(express.urlencoded())
 app.use(express.json())
 
 /*app.get('/api/fae', (,res) => {
@@ -108,10 +109,10 @@ app.get('/search/annonces/rechcate', function (req, res) {
 
   // formulaire d'inscription
   app.post('/inscription', function (req, res) {
-    var params = req.query;
-    console.log(params);
-    /*connection.query('INSERT INTO utilisateur SET ?', params, function (error, results, fields) { 
+    var params = req.body;
+    // il faut récuperer le dernier ID (ou le plus grand) et ajouter 1
+    connection.query('INSERT INTO `utilisateurs` SET IDUtilisateur = 12, ?', params, function (error, results, fields) { 
       if (error) throw error;
       res.end(JSON.stringify(results));
-    });*/
+    });
   });

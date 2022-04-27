@@ -25,7 +25,7 @@ const Recherche = () => {
             searchAnnonceRechCate(rech, IDcat)
             .then((response) => {
                 setAnnonce(response.data);
-                setTotalPage(response.data.length);
+                setTotalPage(response.data.length/10);
             })
             .catch(() => {
             // en cas d'erreur  
@@ -34,7 +34,7 @@ const Recherche = () => {
             searchAnnonceCate(IDcat)
             .then((response) => {
                 setAnnonce(response.data);
-                setTotalPage(response.data.length);
+                setTotalPage(response.data.length/10);
             })
             .catch(() => {
             // en cas d'erreur  
@@ -44,7 +44,7 @@ const Recherche = () => {
             searchAnnonceRech(rech)
             .then((response) => {
                 setAnnonce(response.data);
-                setTotalPage(response.data.length);
+                setTotalPage(response.data.length/10);
             })
             .catch(() => {
             // en cas d'erreur  
@@ -53,7 +53,7 @@ const Recherche = () => {
             searchAnnonce()
                 .then((response) => {
                     setAnnonce(response.data);
-                    setTotalPage(response.data.length);
+                    setTotalPage(response.data.length/10);
                 })
                 .catch(() => {
                 // en cas d'erreur  
@@ -116,7 +116,7 @@ const Recherche = () => {
                 <input className='input' type='text' id='rech' placeholder='Rechercher ici ce que vous voulez...'/>
                 <button className='btn_rech' onClick={handleSearch}>Rechercher</button>
             </div>
-            {annonce.slice((num_page*1)-1,num_page*1).map((e, i)=><div key={i}><Annonce data={e}/></div>)}
+            {annonce.slice((num_page*10)-10,(num_page*10)-1).map((e, i)=><div key={i}><Annonce data={e}/></div>)}
             {categories.map((e, i)=><div key={i}><input type="radio" name="categorie" id={e.IDCategorie} value={e.IDCategorie}/><label htmlFor={e.IDCategorie}>{e.Nom}</label></div>)}
             <ul>
                 {num_page>1 ?
