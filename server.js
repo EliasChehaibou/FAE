@@ -61,9 +61,43 @@ app.listen(PORT, () => {
       });
   });
 
+// recherche annonces par categorie
+app.get('/search/annonces/categorie', function (req, res) {
+  var params = req.query;
+  var query = 'SELECT * from annonces where IDCategorie =' + connection.escape(params.IDCate)
+  connection.query(query,
+    function (error, results, fields) {
+    if (error) throw error;
+    res.send(JSON.stringify(results));
+    });
+});
+
+// recherche annonces avec texte
+app.get('/search/annonces/recherche', function (req, res) {
+  var params = req.query;
+  var query = "SELECT * from annonces where Titre LIKE '%" + params.Texte
+  query += "%'"
+  connection.query(query,
+    function (error, results, fields) {
+    if (error) throw error;
+    res.send(JSON.stringify(results));
+    });
+});
+
+// recherche annonces avec texte et categorie
+app.get('/search/annonces/rechcate', function (req, res) {
+  var params = req.query;
+  var query = "SELECT * from annonces where Titre LIKE '%" + params.Texte
+  query += "%' AND IDCategorie =" + connection.escape(params.IDCate)
+  connection.query(query,
+    function (error, results, fields) {
+    if (error) throw error;
+    res.send(JSON.stringify(results));
+    });
+});
+
   // recherche categories
   app.get('/search/categories', function (req, res) {
-    var params = req.body;
     var query = 'SELECT * from categories'
     connection.query(query,
       function (error, results, fields) {
