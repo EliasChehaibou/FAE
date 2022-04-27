@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../Navbar/Navbar';
 import "./Categories.css"
+import { searchCategories } from '../../rest/search';
 
 const Categories = () => {
+
+    const [categories, setCategories] = useState([]);
+
+    function search(){
+        searchCategories()
+            .then((response) => {
+                setCategories(response.data);
+            })
+            .catch(() => {
+            // en cas d'erreur  
+            })
+    }
+
+    useEffect (()=>{
+        search();
+    },[]);
+
     return (
         <div>
             <Navbar/>
-            <div>
-                <div><a href='./recherche?cat=jou'>Jouets</a></div>
-                <div><a href='./recherche?cat=vet'>Vêtements</a></div>
-                <div><a href='./recherche?cat=hig'>High-tech</a></div>
-                <div><a href='./recherche?cat=ani'>Animaux</a></div>
-                <div><a href='./recherche?cat=veh'>Véhicules</a></div>
-                <div><a href='./recherche?cat=spo'>Sports</a></div>
-            </div>
+            {categories.map((e, i)=><div key={i}><a href={'./recherche?cat='+e.IDCategorie}>{e.Nom}</a></div>)}
         </div>
     );
 };

@@ -1,20 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { searchAnnonce } from '../rest/annonces';
+import React from 'react';
 
-const Annonce = () => {
-  
-    const [annonce, setAnnonce] = useState([]);
 
-    useEffect (()=>{
-        setAnnonce(annonce);
-    }, []);
-
-    function search (){ searchAnnonce().then((response) => setAnnonce(response.data))};
+const Annonce = (props) => {
 
     return (
         <div>
-            <button onClick={search}>Annonce</button>
-            {annonce.map(e=><div key="{e.IDAnnonce}" >{e.IDAnnonce}</div>)}
+            <div>ID de l'annonce: {props.data.IDAnnonce}</div>
+            <div>ID de l'utilisateur: {props.data.IDUtilisateur}</div>
+            <div >Date de creation: {props.data.DateCrea}</div>
         </div>
     );
 };

@@ -52,9 +52,8 @@ app.listen(PORT, () => {
 
 
 // recherche annonces
-  app.get('/annonces/search', function (req, res) {
-    var params = req.body;
-    var query = 'SELECT IDAnnonce from annonces'
+  app.get('/search/annonces', function (req, res) {
+    var query = 'SELECT * from annonces'
     connection.query(query,
       function (error, results, fields) {
       if (error) throw error;
@@ -62,3 +61,13 @@ app.listen(PORT, () => {
       });
   });
 
+  // recherche categories
+  app.get('/search/categories', function (req, res) {
+    var params = req.body;
+    var query = 'SELECT * from categories'
+    connection.query(query,
+      function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+      });
+  });
