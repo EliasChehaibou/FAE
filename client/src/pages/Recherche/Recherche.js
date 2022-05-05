@@ -8,6 +8,7 @@ const Recherche = () => {
     var urlcourante = document.location.href; 
     var url = new URL(urlcourante);
     var search_params = new URLSearchParams(url.search); 
+    
     if(search_params.has('cat')) {
         var IDcat = search_params.get('cat');
     }

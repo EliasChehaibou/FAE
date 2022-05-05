@@ -110,9 +110,30 @@ app.get('/search/annonces/rechcate', function (req, res) {
   // formulaire d'inscription
   app.post('/inscription', function (req, res) {
     var params = req.body;
-    // il faut récuperer le dernier ID (ou le plus grand) et ajouter 1
-    connection.query('INSERT INTO `utilisateurs` SET IDUtilisateur = 12, ?', params, function (error, results, fields) { 
+    var userID;
+    if (params.Birthdate==''){
+      delete params.Birthdate;
+    }
+    if (params.Confirm){
+      delete params.Confirm;
+    }
+    connection.query('SELECT MAX(IDUtilisateur) AS IDUser from utilisateurs', function (error, results, fields) { 
       if (error) throw error;
-      res.end(JSON.stringify(results));
+      userID = results[0].IDUser; 
+      connection.query('INSERT INTO `utilisateurs` SET IDUtilisateur = '+(userID+1)+', ?', params, function (error, results, fields) { 
+        if (error) throw error;
+        res.status(204).send();
+      });
     });
   });
+
+    // formulaire de connexion
+    app.post('/inscription', function (req, res) {
+      var params = req.body;
+      console.log(params);
+      connection.query('SELECT IDUtilisateur from utilisateurs WHERE Email='+params.Email+' AND password='+params.Password, function (error, results, fields) { 
+        if (error) throw error;
+        console.log(results);
+        res.status(204).send();
+      });
+    });

@@ -21,3 +21,7 @@ export const searchAnnonceRechCate = (Recherche, IDCategorie) => {
 export const searchCategories = () => {
     return axios.get(`http://localhost:2000/search/categories`);
   }
+  
+export const createUser = (params) => {
+return axios.post(`http://localhost:2000/inscription`,params);
+}
