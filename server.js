@@ -128,10 +128,10 @@ app.get('/search/annonces/rechcate', function (req, res) {
   });
 
     // formulaire de connexion
-    app.post('/inscription', function (req, res) {
+    app.post('/connexion', function (req, res) {
       var params = req.body;
       console.log(params);
-      connection.query('SELECT IDUtilisateur from utilisateurs WHERE Email='+params.Email+' AND password='+params.Password, function (error, results, fields) { 
+      connection.query("SELECT IDUtilisateur from utilisateurs WHERE Email='"+params.Email+"' AND password='"+params.Password+"'", function (error, results, fields) { 
         if (error) throw error;
         console.log(results);
         res.status(204).send();

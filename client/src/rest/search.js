@@ -23,5 +23,9 @@ export const searchCategories = () => {
   }
   
 export const createUser = (params) => {
-return axios.post(`http://localhost:2000/inscription`,params);
+  return axios.post(`http://localhost:2000/inscription`,params);
+}
+
+export const connectUser = (params) => {
+  return axios.post(`http://localhost:2000/connexion`,params);
 }

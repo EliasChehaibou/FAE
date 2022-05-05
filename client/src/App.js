@@ -7,6 +7,7 @@ import Inscription from './pages/Inscription/Inscription'
 import Categories from './pages/Categories/Categories'
 import Recherche from './pages/Recherche/Recherche'
 import Connexion from './pages/Connexion/Connexion'
+import Profil from './pages/Profil/Profil'
 
 function App() {
   /*const [msg,setMsg] = useState('')
@@ -26,6 +27,7 @@ function App() {
           <Route exact path="/categories" element={<Categories />} />
           <Route exact path="/recherche" element={<Recherche />} />
           <Route exact path="/connexion" element={<Connexion />} />
+          <Route exact path="/profil" element={<Profil />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
     </div>   
