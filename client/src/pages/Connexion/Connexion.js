@@ -1,24 +1,21 @@
-import React from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../../Navbar/Navbar';
 import { connectUser } from '../../rest/search';
 
 const Connexion = () => {
+    const [IDUtilisateur, setIDUtilisateur] = useState([]);
+
+
     let navigate = useNavigate();
     function validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     }
 
-    function validatePassword(password) {
-        var re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-        return re.test(password);
-    }
-
     function Verification() {
-        // Récupérer la valeur des champs password et email
+        // Récupérer la valeur du champ email
         var Email = document.getElementById('email').value;
-        var Password = document.getElementById('password').value;
 
         // Contrôle sur l'email
         if(Email=='' || !validateEmail(Email)) {
@@ -27,18 +24,21 @@ const Connexion = () => {
             return false;
         }        
         
-        // Contrôle sur le mot de passe
-        if(Password=='' || !validatePassword(Password)) {
-            document.getElementById('password').style.backgroundColor="red";
-            document.getElementById('password').style.color="#FFF";
-            return false;
-        }
         var myForm = document.getElementById('form');
         let formData = new FormData(myForm);
         var object = {};
         formData.forEach((value, key) => (object[key] = value));
-        connectUser(object);
-        navigate('/profil');
+        connectUser(object).then((response) => {
+            console.log(IDUtilisateur);
+            setIDUtilisateur(response.data);
+            console.log(response.data);
+        });
+        console.log(IDUtilisateur);
+        if (IDUtilisateur) {
+            //navigate('/profil');
+        }
+        //window.location.reload();
+        
     }
     return (
         <div>

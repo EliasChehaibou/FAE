@@ -134,6 +134,6 @@ app.get('/search/annonces/rechcate', function (req, res) {
       connection.query("SELECT IDUtilisateur from utilisateurs WHERE Email='"+params.Email+"' AND password='"+params.Password+"'", function (error, results, fields) { 
         if (error) throw error;
         console.log(results);
-        res.status(204).send();
+        res.send(JSON.stringify(results));
       });
     });
