@@ -29,3 +29,15 @@ export const createUser = (params) => {
 export const connectUser = (params) => {
   return axios.post(`http://localhost:2000/connexion`,params);
 }
+
+export const searchUtilisateur = (IDUtilisateur) => {
+  return axios.get(`http://localhost:2000/search/utilisateur`, {params:{IDUtilisateur: IDUtilisateur}});
+}
+
+export const searchDetail = (IDAnnonce) => {
+  return axios.get(`http://localhost:2000/search/detail`, {params:{IDAnnonce: IDAnnonce}});
+}
+
+export const enchereUser = (Enchere, IDAnnonce) => {
+  return axios.get(`http://localhost:2000/encherir`,{params:{Enchere: Enchere, IDAnnonce: IDAnnonce}});
+}

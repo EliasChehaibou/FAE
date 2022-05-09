@@ -151,3 +151,37 @@ app.post("/connexion", function (req, res) {
     }
   );
 });
+
+
+// recherche utilisateur
+app.get("/search/utilisateur", function (req, res) {
+  var params = req.query;
+  var query = "SELECT * from utilisateurs where IDUtilisateur ="+connection.escape(params.IDUtilisateur);
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.send(JSON.stringify(results));
+  });
+});
+
+// recherche detail
+app.get("/search/detail", function (req, res) {
+  var params = req.query;
+  var query = "SELECT * from annonces where IDAnnonce ="+connection.escape(params.IDAnnonce);
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.send(JSON.stringify(results));
+  });
+});
+
+// enchere offre
+app.get("/encherir", function (req, res) {
+  var params = req.query;
+  var query = "UPDATE annonces set Enchere =" +params.Enchere+ " where IDAnnonce =" +params.IDAnnonce
+  connection.query(
+    query,
+    function (error, results, fields) {
+      if (error) throw error;
+      res.status(204).send();
+    }
+  );
+});
