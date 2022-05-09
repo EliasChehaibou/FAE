@@ -12,7 +12,7 @@ var connection;
 var dbhost = process.env.DB_HOST || "localhost";
 var dbuser = process.env.DB_USER || "root";
 var dbpassword = process.env.DB_PASSWORD || "";
-var dbname = process.env.DB_NAME || "ebey";
+var dbname = process.env.DB_NAME || "fae_database";
 var dev_database_url =
   "mysql://" + dbuser + ":" + dbpassword + "@" + dbhost + "/" + dbname;
 
@@ -139,7 +139,6 @@ app.post("/inscription", function (req, res) {
 // formulaire de connexion
 app.post("/connexion", function (req, res) {
   var params = req.body;
-  console.log(params);
   connection.query(
     "SELECT IDUtilisateur from utilisateurs WHERE Email='" +
       params.Email +
@@ -148,7 +147,6 @@ app.post("/connexion", function (req, res) {
       "'",
     function (error, results, fields) {
       if (error) throw error;
-      console.log(results);
       res.send(JSON.stringify(results));
     }
   );

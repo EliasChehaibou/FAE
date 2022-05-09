@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import { connectUser } from "../../rest/search";
+import { ReactSession } from 'react-client-session';
 
+ReactSession.setStoreType("sessionStorage");
 const Connexion = () => {
-  const [IDUtilisateur, setIDUtilisateur] = useState([]);
 
   let navigate = useNavigate();
   function validateEmail(email) {
@@ -15,6 +16,7 @@ const Connexion = () => {
 
   function Verification(event) {
     event.preventDefault();
+    
     // Récupérer la valeur du champ email
     var Email = document.getElementById("email").value;
 
@@ -30,21 +32,12 @@ const Connexion = () => {
     var object = {};
     formData.forEach((value, key) => (object[key] = value));
     connectUser(object).then((response) => {
-      console.log(response.status);
-      //   if (response.status == 200) {
-      //     window.location = "/login";
-      //     console.log("ok 200");
-      //   }
-      console.log(IDUtilisateur);
-      setIDUtilisateur(response.data);
-      console.log(response.data);
-    });
-    console.log(IDUtilisateur);
-    //if (IDUtilisateur) {
-    //navigate('/profil');
-    //}
-    //window.location.reload();
+        if (response.data.length>0){
+            ReactSession.set("IDUtilisateur", response.data[0].IDUtilisateur);
+            navigate('/profil');}
+    })
   }
+  
   return (
     <div>
       <Navbar />
