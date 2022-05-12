@@ -46,11 +46,6 @@ app.use(cors());
 app.use(express.urlencoded());
 app.use(express.json());
 
-/*app.get('/api/fae', (,res) => {
-    res.send({
-        msg: "Chez FAE on a tout ce qu'on veut!"
-    })
-})*/
 app.listen(PORT, () => {
   console.log(`le serveur est lancé sur le port: ${PORT}`);
 });
@@ -182,6 +177,43 @@ app.get("/encherir", function (req, res) {
     function (error, results, fields) {
       if (error) throw error;
       res.status(204).send();
+    }
+  );
+});
+
+// achat immédiat offre
+app.get("/achim", function (req, res) {
+  var params = req.query;
+  var query = "UPDATE annonces set IsVendue = 1, IDAcheteur = "+params.IDUtilisateur+" where IDAnnonce = "+params.IDAnnonce
+  connection.query(
+    query,
+    function (error, results, fields) {
+      if (error) throw error;
+      res.status(204).send();        
+    }
+  );
+});
+
+
+// formulaire poster une annonce
+app.post("/poster", function (req, res) {
+  var params = req.body;
+  var IDAnnonce;
+  connection.query(
+    "SELECT MAX(IDAnnonce) AS IDAnnonce from annonces",
+    function (error, results, fields) {
+      if (error) throw error;
+      IDAnnonce = results[0].IDAnnonce;
+      connection.query(
+        "INSERT INTO `annonces` SET IDAnnonce = " +
+          (IDAnnonce + 1) +
+          ", ?",
+        params,
+        function (error, results, fields) {
+          if (error) throw error;
+          res.status(204).send();
+        }
+      );
     }
   );
 });

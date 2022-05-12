@@ -55,6 +55,7 @@ export default function Navbar() {
         {(ID!=null) && (
           <>
           <li className='items'><Link to="/profil" className='link'>Profil</Link></li>
+          <li className='items'><Link to="/poster" className='link'>Poster une annonce</Link></li>
           <li className='items'><button onClick={handleDeco} className='button'>Déconnexion</button></li></>
         )}        
         </ul>

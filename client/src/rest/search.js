@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_ENDPOINT = '/search'
+//const API_ENDPOINT = '/search'
 
 export const searchAnnonce = () => {
     return axios.get(`http://localhost:2000/search/annonces`);
@@ -40,4 +40,12 @@ export const searchDetail = (IDAnnonce) => {
 
 export const enchereUser = (Enchere, IDAnnonce) => {
   return axios.get(`http://localhost:2000/encherir`,{params:{Enchere: Enchere, IDAnnonce: IDAnnonce}});
+}
+
+export const achImUser = (IDUtilisateur, IDAnnonce, IDVendeur) => {
+  return axios.get(`http://localhost:2000/achim`,{params:{IDUtilisateur: IDUtilisateur, IDAnnonce: IDAnnonce, IDVendeur: IDVendeur}});
+}
+
+export const posterAnnonce = (params) => {
+  return axios.post(`http://localhost:2000/poster`,params);
 }

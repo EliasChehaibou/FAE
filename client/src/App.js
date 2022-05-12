@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Route, Routes} from 'react-router-dom'
 import "./App.css"
 import Home from './pages/Home/Home'
@@ -9,16 +9,10 @@ import Recherche from './pages/Recherche/Recherche'
 import Connexion from './pages/Connexion/Connexion'
 import Profil from './pages/Profil/Profil'
 import Detail from './pages/Detail/Detail'
+import Historique from './pages/Historique/Historique'
+import Poster from './pages/Poster/Poster'
 
 function App() {
-  /*const [msg,setMsg] = useState('')
-  const handleClick = async () => {
-    const data = await window.fetch('/api/fae')
-    const json = await data.json()
-    const msg = json.msg
-
-    setMsg(msg)
-  }*/
 
   return (
     <div className='App'>
@@ -30,6 +24,8 @@ function App() {
           <Route exact path="/connexion" element={<Connexion />} />
           <Route exact path="/profil" element={<Profil />} />
           <Route exact path="/detail" element={<Detail />} />
+          <Route exact path="/historique" element={<Historique />} />
+          <Route exact path="/poster" element={<Poster />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
     </div>   
