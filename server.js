@@ -184,14 +184,17 @@ app.get("/encherir", function (req, res) {
 // achat immédiat offre
 app.get("/achim", function (req, res) {
   var params = req.query;
-  var query = "UPDATE annonces set IsVendue = 1, IDAcheteur = "+params.IDUtilisateur+" where IDAnnonce = "+params.IDAnnonce
+  console.log(params.Annonce)
+  console.log(params.Annonce.IDUtilisateur)
+  /*var query = "INSERT INTO historiques(IDAnnonce, IDUtilisateur, EnchereDepart, Enchere, Description, AchatImmediat, IsAchIm, IDCategorie, DateCrea, DateFin, Titre, IDAcheteur) VALUES ("+params.Annonce.IDAnnonce+", "+params.Annonce.IDUtilisateur+", "+params.Annonce.EnchereDepart+", "+params.Annonce.Enchere+", "+params.Annonce.Description+", "+params.Annonce.AchatImmediat+", "+params.Annonce.IsAchIm+", "+params.Annonce.IDCategorie+", "+params.Annonce.DateCrea+", "+params.Annonce.DateFin+", "+params.Annonce.Titre+", "+params.IDUtilisateur+");"
+  query += "DELETE FROM annonces where IDAnnonce = "+params.Annonce.IDAnnonce+";"
   connection.query(
     query,
     function (error, results, fields) {
       if (error) throw error;
       res.status(204).send();        
     }
-  );
+  );*/
 });
 
 

@@ -33,7 +33,7 @@ const Detail = () => {
     }
 
     function handleAchIm(){
-        achImUser(IDUtilisateur, IDAnnonce, annonce.IDUtilisateur);
+        achImUser(IDUtilisateur, annonce);
         setAchim(true);
     }
 
