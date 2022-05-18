@@ -49,3 +49,7 @@ export const achImUser = (IDUtilisateur, Annonce) => {
 export const posterAnnonce = (params) => {
   return axios.post(`http://localhost:2000/poster`,params);
 }
+
+export const historique = (IDUtilisateur) => {
+  return axios.get(`http://localhost:2000/historique`,{params:{IDUtilisateur: IDUtilisateur}});
+}

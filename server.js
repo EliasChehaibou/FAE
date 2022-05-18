@@ -228,3 +228,29 @@ app.post("/poster", function (req, res) {
     }
   );
 });
+
+// recherche historique
+app.get("/historique", function (req, res) {
+  var params = req.query;
+  connection.query("SELECT * from historiques where IDUtilisateur ="+params.IDUtilisateur, 
+  function (error, results, fields) {
+    if (error) throw error;
+    var vend = JSON.stringify(results);
+    connection.query("SELECT * from historiques where IDAcheteur ="+params.IDUtilisateur,
+    function (error, results, fields) {
+      if (error) throw error;
+      var ach = JSON.stringify(results);
+      connection.query("SELECT * from annonces where IDUtilisateur ="+params.IDUtilisateur,
+        function (error, results, fields) {
+          if (error) throw error;
+          var vent = JSON.stringify(results);
+          connection.query("SELECT * from annonces where IDUtilisateur ="+params.IDUtilisateur,
+            function (error, results, fields) {
+              if (error) throw error;
+              var enc = JSON.stringify(results);
+              res.send({vendues : vend, achetees : ach, vente : vent, enchere : enc })
+            })
+        })
+    })
+  });
+});
