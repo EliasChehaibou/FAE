@@ -184,17 +184,25 @@ app.get("/encherir", function (req, res) {
 // achat immédiat offre
 app.get("/achim", function (req, res) {
   var params = req.query;
-  console.log(params.Annonce)
-  console.log(params.Annonce.IDUtilisateur)
-  /*var query = "INSERT INTO historiques(IDAnnonce, IDUtilisateur, EnchereDepart, Enchere, Description, AchatImmediat, IsAchIm, IDCategorie, DateCrea, DateFin, Titre, IDAcheteur) VALUES ("+params.Annonce.IDAnnonce+", "+params.Annonce.IDUtilisateur+", "+params.Annonce.EnchereDepart+", "+params.Annonce.Enchere+", "+params.Annonce.Description+", "+params.Annonce.AchatImmediat+", "+params.Annonce.IsAchIm+", "+params.Annonce.IDCategorie+", "+params.Annonce.DateCrea+", "+params.Annonce.DateFin+", "+params.Annonce.Titre+", "+params.IDUtilisateur+");"
-  query += "DELETE FROM annonces where IDAnnonce = "+params.Annonce.IDAnnonce+";"
+  var annonce = JSON.parse(params.Annonce);
+  var DateCrea = annonce.DateCrea.slice(0, 19).replace('T', ' ');
+  var DateFin = annonce.DateFin.slice(0, 19).replace('T', ' ');
+  console.log(DateCrea)
+  var query = "INSERT INTO historiques(IDAnnonce, IDUtilisateur, EnchereDepart, Enchere, Description, AchatImmediat, IsAchIm, IDCategorie, DateCrea, DateFin, Titre, IDAcheteur) VALUES ('"+annonce.IDAnnonce+"', '"+annonce.IDUtilisateur+"', '"+annonce.EnchereDepart+"', '"+annonce.Enchere+"', '"+annonce.Description+"', '"+annonce.AchatImmediat+"', '"+annonce.IsAchIm+"', '"+annonce.IDCategorie+"', '"+DateCrea+"', '"+DateFin+"', '"+annonce.Titre+"', '"+params.IDUtilisateur+"');"
   connection.query(
     query,
     function (error, results, fields) {
       if (error) throw error;
-      res.status(204).send();        
+      query = " DELETE FROM annonces where IDAnnonce = '"+annonce.IDAnnonce+"';"
+      connection.query(
+        query,
+        function (error, results, fields) {
+          if (error) throw error;
+          res.status(204).send();
+        }
+      )              
     }
-  );*/
+  );
 });
 
 
