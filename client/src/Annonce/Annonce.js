@@ -1,17 +1,29 @@
-import React from 'react';
-
-
+import React from "react";
+import "./Annonce.css";
+import logo from "./logo.png";
+import dateFormat from "dateformat";
 const Annonce = (props) => {
-
-    return (
+  console.log(props.data);
+  return (
+    <div className="container">
+      <div className="photo">
+        <img src={logo} alt="Logo" />
+      </div>
+      <div className="informations">
         <div>
-            <div>Titre de l'annonce: <a href={'./detail?ida='+props.data.IDAnnonce}>{props.data.Titre}</a></div>
-            <div>ID de l'annonce: {props.data.IDAnnonce}</div>
-            <div>ID de l'utilisateur: {props.data.IDUtilisateur}</div>
-            <div >Date de creation: {props.data.DateCrea}</div>
-            
+          Titre de l'annonce:{" "}
+          <a href={"./detail?ida=" + props.data.IDAnnonce}>
+            {props.data.Titre}
+          </a>
         </div>
-    );
+        <div>Enchere acttuelle: {props.data.Enchere}</div>
+        <div>Achat immédiat: {props.data.Enchere}</div>
+        <div>
+          Fin le: {dateFormat(props.data.DateFin, "dd/MM/yyyy HH:mm:ss")}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Annonce;
