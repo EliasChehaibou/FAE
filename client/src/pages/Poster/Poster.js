@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import Navbar from '../../Navbar/Navbar';
 import { posterAnnonce, searchCategories } from '../../rest/search';
+import { ReactSession } from 'react-client-session';
 
 const Poster = () => {
-    const [isOk, setIsOk] = useState(false);
+    const IDUtilisateur = ReactSession.get("IDUtilisateur");
+
+    const [isPoste, setIsPoste] = useState(false);
     const [isAchim, setIsAchIm] = useState();
     const [categories, setCategories] = useState([]);
-    const [date, setDate] = useState();
+    const [dateFin, setDateFin] = useState([]);
 
     useEffect (()=>{
         searchCategories().then((response) => {
@@ -23,16 +26,17 @@ const Poster = () => {
         let formData = new FormData(myForm);
         var object = {};
         formData.forEach((value, key) => (object[key] = value));
-        posterAnnonce(object);
-        console.log(formData);
-        setIsOk(true);
+        posterAnnonce({IDUtilisateur : IDUtilisateur, Annonce : object});
+        setDateFin(document.getElementById('ddf').value)
+        setIsPoste(true);
     }
 
     return (
         <div>
             <Navbar/>
-            {!isOk && 
-            <form id='form' name='form' action='http://localhost:2000/poster' method='post' onSubmit={Verification} className='Form' >
+            {(IDUtilisateur!=null) ?<>
+            {(!isPoste) && 
+            <form id='form' name='form'  onSubmit={Verification} className='Form' >
                 <label htmlFor="titre">Titre*</label>
                 <input type="text" id="titre" name="Titre" required/>
                 <label htmlFor="Description">Description</label>
@@ -51,13 +55,14 @@ const Poster = () => {
                 <select id="categorie" name="IDCategorie">
                     {categories.map((e, i)=><option key={i} value={e.IDCategorie}>{e.Nom}</option>)}
                 </select>
-                <label htmlFor="ddf">Date de fin de la vente</label>
-                <input type="date" id="ddf" min="2022-01-01" max="2028-01-01" name="Datefin"/>
+                <label htmlFor="ddf">Date de fin de la vente*</label>
+                <input type="date" id="ddf" min="2022-01-01" max="2028-01-01" name="Datefin" required/>
                 <input type='submit' value='Enregistrer'/>
                 <p>*Champs obligatoires</p>
                 </form>}
-            {isOk && 
-            <>Félicitations! Votre annonce a été postée et la vente se terminera le </>}
+            {isPoste && 
+            <>Félicitations! Votre annonce a été postée et la vente se terminera le {dateFin}</>}
+            </>: <>Pour poster une annonce veuillez vous <a href='/connexion'>connecter</a> ou vous <a href='/inscription'>inscrire</a>.</>}
         </div>
     );
 };

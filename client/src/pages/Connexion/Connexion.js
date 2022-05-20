@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import { connectUser } from "../../rest/search";
@@ -34,6 +34,9 @@ const Connexion = () => {
     connectUser(object).then((response) => {
         if (response.data.length>0){
             ReactSession.set("IDUtilisateur", response.data[0].IDUtilisateur);
+            if (response.data[0].IDAdmin!=null) {
+              ReactSession.set("IDAdmin", response.data[0].IDAdmin);
+            }
             navigate('/profil');}
     })
   }

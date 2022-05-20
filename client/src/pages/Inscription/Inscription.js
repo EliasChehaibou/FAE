@@ -54,7 +54,7 @@ const Inscription = () => {
             <Navbar/>
             <p>Formulaire d'inscription</p>
             {!isOk &&
-            <form id='form' name='form' action='http://localhost:2000/inscription' method='post' onSubmit={Verification} className='Form'>          
+            <form id='form' name='form' onSubmit={Verification} className='Form'>          
                 <label htmlFor="nom">Nom*</label>
                 <input type="text" id="nom" name="Nom" required/>
                 <label htmlFor="prenom">Prénom</label>

@@ -38,8 +38,8 @@ export const searchDetail = (IDAnnonce) => {
   return axios.get(`http://localhost:2000/search/detail`, {params:{IDAnnonce: IDAnnonce}});
 }
 
-export const enchereUser = (Enchere, IDAnnonce) => {
-  return axios.get(`http://localhost:2000/encherir`,{params:{Enchere: Enchere, IDAnnonce: IDAnnonce}});
+export const enchereUser = (IDUtilisateur, Enchere, IDAnnonce) => {
+  return axios.get(`http://localhost:2000/encherir`,{params:{IDUtilisateur: IDUtilisateur, Enchere: Enchere, IDAnnonce: IDAnnonce}});
 }
 
 export const achImUser = (IDUtilisateur, Annonce) => {

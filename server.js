@@ -120,7 +120,7 @@ app.post("/inscription", function (req, res) {
       connection.query(
         "INSERT INTO `utilisateurs` SET IDUtilisateur = " +
           (userID + 1) +
-          ", ?",
+          ", SET IDHistorique = "+(userID + 1)+", ?",
         params,
         function (error, results, fields) {
           if (error) throw error;
@@ -135,7 +135,7 @@ app.post("/inscription", function (req, res) {
 app.post("/connexion", function (req, res) {
   var params = req.body;
   connection.query(
-    "SELECT IDUtilisateur from utilisateurs WHERE Email='" +
+    "SELECT IDUtilisateur, IDAdmin from utilisateurs WHERE Email='" +
       params.Email +
       "' AND password='" +
       params.Password +
@@ -171,7 +171,7 @@ app.get("/search/detail", function (req, res) {
 // enchere offre
 app.get("/encherir", function (req, res) {
   var params = req.query;
-  var query = "UPDATE annonces set Enchere =" +params.Enchere+ " where IDAnnonce =" +params.IDAnnonce
+  var query = "UPDATE annonces set Enchere =" +params.Enchere+ ", IDAcheteur = "+params.IDUtilisateur+" where IDAnnonce =" +params.IDAnnonce
   connection.query(
     query,
     function (error, results, fields) {
@@ -187,7 +187,6 @@ app.get("/achim", function (req, res) {
   var annonce = JSON.parse(params.Annonce);
   var DateCrea = annonce.DateCrea.slice(0, 19).replace('T', ' ');
   var DateFin = annonce.DateFin.slice(0, 19).replace('T', ' ');
-  console.log(DateCrea)
   var query = "INSERT INTO historiques(IDAnnonce, IDUtilisateur, EnchereDepart, Enchere, Description, AchatImmediat, IsAchIm, IDCategorie, DateCrea, DateFin, Titre, IDAcheteur) VALUES ('"+annonce.IDAnnonce+"', '"+annonce.IDUtilisateur+"', '"+annonce.EnchereDepart+"', '"+annonce.Enchere+"', '"+annonce.Description+"', '"+annonce.AchatImmediat+"', '"+annonce.IsAchIm+"', '"+annonce.IDCategorie+"', '"+DateCrea+"', '"+DateFin+"', '"+annonce.Titre+"', '"+params.IDUtilisateur+"');"
   connection.query(
     query,
@@ -209,24 +208,34 @@ app.get("/achim", function (req, res) {
 // formulaire poster une annonce
 app.post("/poster", function (req, res) {
   var params = req.body;
+  var IDAnnonce1;
+  var IDAnnonce2;
   var IDAnnonce;
   connection.query(
     "SELECT MAX(IDAnnonce) AS IDAnnonce from annonces",
     function (error, results, fields) {
       if (error) throw error;
-      IDAnnonce = results[0].IDAnnonce;
+      IDAnnonce1 = results[0].IDAnnonce;
       connection.query(
-        "INSERT INTO `annonces` SET IDAnnonce = " +
-          (IDAnnonce + 1) +
-          ", ?",
-        params,
+        "SELECT MAX(IDAnnonce) AS IDAnnonce from historiques",
         function (error, results, fields) {
           if (error) throw error;
-          res.status(204).send();
+          IDAnnonce2 = results[0].IDAnnonce;
+          IDAnnonce = Math.max(IDAnnonce1, IDAnnonce2);
+          connection.query(
+            "INSERT INTO `annonces` SET DateCrea=NOW(), IDAnnonce = " +
+              (IDAnnonce + 1) +
+              ", IDUtilisateur = "+params.IDUtilisateur+", ?",
+            params.Annonce,
+            function (error, results, fields) {
+              if (error) throw error;
+              res.status(204).send();
+            }
+          );
         }
-      );
+      );               
     }
-  );
+  )
 });
 
 // recherche historique
@@ -244,7 +253,7 @@ app.get("/historique", function (req, res) {
         function (error, results, fields) {
           if (error) throw error;
           var vent = JSON.stringify(results);
-          connection.query("SELECT * from annonces where IDUtilisateur ="+params.IDUtilisateur,
+          connection.query("SELECT * from annonces where IDAcheteur ="+params.IDUtilisateur,
             function (error, results, fields) {
               if (error) throw error;
               var enc = JSON.stringify(results);

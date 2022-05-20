@@ -11,6 +11,7 @@ import Profil from './pages/Profil/Profil'
 import Detail from './pages/Detail/Detail'
 import Historique from './pages/Historique/Historique'
 import Poster from './pages/Poster/Poster'
+import Admin from './Admin/Admin'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route exact path="/detail" element={<Detail />} />
           <Route exact path="/historique" element={<Historique />} />
           <Route exact path="/poster" element={<Poster />} />
+          <Route exact path="/admin" element={<Admin />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
     </div>   

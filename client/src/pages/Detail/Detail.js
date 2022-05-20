@@ -25,8 +25,9 @@ const Detail = () => {
     function handleEnchere(){
         let ench = parseInt(document.getElementById('ench').value)
         if (ench && ench>enchere) {
-            enchereUser(ench, IDAnnonce);  
+            enchereUser(IDUtilisateur, ench, IDAnnonce);  
             setEnchere(ench);
+            alert('enchère réussie')
         } else {
             alert('enchère invalide')
         }

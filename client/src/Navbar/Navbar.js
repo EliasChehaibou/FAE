@@ -5,6 +5,7 @@ import { ReactSession } from 'react-client-session';
 
 export default function Navbar() {
   const [ID, setID] = useState(null);
+  const [IDA, setIDA] = useState(null);
   const [toggleMenu, setToggleMenu] = useState(false);
   const [largeur, setLargeur] = useState(window.innerWidth)
 
@@ -16,6 +17,7 @@ export default function Navbar() {
 
   useEffect( () => {
       setID(ReactSession.get("IDUtilisateur"));
+      setIDA(ReactSession.get("IDAdmin"));
       const changeWidth = () => {
         setLargeur(window.innerWidth);
         if (window.innerWidth>500){
@@ -33,6 +35,7 @@ export default function Navbar() {
 
   function handleDeco(){
     ReactSession.set("IDUtilisateur", null);
+    ReactSession.set("IDAdmin", null);
     navigate('/');
   }
 
@@ -55,9 +58,16 @@ export default function Navbar() {
         {(ID!=null) && (
           <>
           <li className='items'><Link to="/profil" className='link'>Profil</Link></li>
-          <li className='items'><Link to="/poster" className='link'>Poster une annonce</Link></li>
-          <li className='items'><button onClick={handleDeco} className='button'>Déconnexion</button></li></>
-        )}        
+          <li className='items'><Link to="/poster" className='link'>Poster une annonce</Link></li></> 
+          
+        )} 
+        {(IDA!=null) && (
+        <>
+        <li className='items'><Link to="/admin" className='link'>Administration</Link></li></>
+        )}
+        {(ID!=null) &&
+        (<><li className='items'><button onClick={handleDeco} className='button'>Déconnexion</button></li></>
+        )}      
         </ul>
         )}
         <button onClick={toggleNavSmallScreen} className='btn'>Déplier</button>
