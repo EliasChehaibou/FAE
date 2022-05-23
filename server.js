@@ -120,7 +120,7 @@ app.post("/inscription", function (req, res) {
       connection.query(
         "INSERT INTO `utilisateurs` SET IDUtilisateur = " +
           (userID + 1) +
-          ", SET IDHistorique = "+(userID + 1)+", ?",
+          ", IDHistorique = "+(userID + 1)+", ?",
         params,
         function (error, results, fields) {
           if (error) throw error;
@@ -262,4 +262,78 @@ app.get("/historique", function (req, res) {
         })
     })
   });
+});
+
+// recherche liste utilisateurs
+app.get("/search/utilisateurs", function (req, res) {
+  var params = req.query;
+  var query = "SELECT * FROM utilisateurs WHERE NOT IDUtilisateur= "+params.IDUtilisateur
+  connection.query(
+    query,
+    function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+    }
+  );
+});
+
+// supprimer categorie
+app.get("/delete/categorie", function (req, res) {
+  var params = req.query;
+  var query = "DELETE FROM categories WHERE IDCategorie="+params.IDCategorie+" AND Nom='"+params.Nom+"'"
+  connection.query(
+    query,
+    function (error, results, fields) {
+      if (error) throw error;
+      res.status(204).send();
+    }
+  );
+});
+
+// formulaire de création de catégorie
+app.post("/createcate", function (req, res) {
+  var params = req.body;
+  connection.query(
+    "SELECT MAX(IDCategorie) AS IDCate from categories",
+    function (error, results, fields) {
+      if (error) throw error;
+      cateID = results[0].IDCate;
+      connection.query(
+        "INSERT INTO `categories` SET IDCategorie = " +
+          (cateID + 1) +
+          ", Nom = '"+params.Nom+"'",
+        function (error, results, fields) {
+          if (error) throw error;
+          res.status(204).send();
+        }
+      );
+    }
+  );
+});
+
+// supprimer utilisateur
+app.get("/delete/user", function (req, res) {
+  var params = req.query;
+  var query = "DELETE FROM utilisateurs WHERE IDUtilisateur="+params.IDUtilisateur
+  connection.query(
+    query,
+    function (error, results, fields) {
+      if (error) throw error;
+      res.status(204).send();
+    }
+  );
+});
+
+// supprimer annonce
+app.get("/delete/annonce", function (req, res) {
+  var params = req.query;
+  const annonce = JSON.parse(params.Annonce)
+  var query = "DELETE FROM annonces WHERE IDAnnonce="+annonce.IDAnnonce
+  connection.query(
+    query,
+    function (error, results, fields) {
+      if (error) throw error;
+      res.status(204).send();
+    }
+  );
 });

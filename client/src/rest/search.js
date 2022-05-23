@@ -53,3 +53,23 @@ export const posterAnnonce = (params) => {
 export const historique = (IDUtilisateur) => {
   return axios.get(`http://localhost:2000/historique`,{params:{IDUtilisateur: IDUtilisateur}});
 }
+
+export const searchUtilisateurs = (IDUtilisateur) => {
+  return axios.get(`http://localhost:2000/search/utilisateurs`, {params:{IDUtilisateur: IDUtilisateur}});
+}
+
+export const deleteCategorie = (Nom, IDCategorie) => {
+  return axios.get(`http://localhost:2000/delete/categorie`, {params:{Nom: Nom, IDCategorie: IDCategorie }});
+}
+
+export const createCategorie = (params) => {
+  return axios.post(`http://localhost:2000/createcate`,params);
+}
+
+export const deleteUtilisateur = (IDUtilisateur) => {
+  return axios.get(`http://localhost:2000/delete/user`, {params:{IDUtilisateur: IDUtilisateur }});
+}
+
+export const deleteAnnonce = (Annonce) => {
+  return axios.get(`http://localhost:2000/delete/annonce`, {params:{Annonce: Annonce}});
+}

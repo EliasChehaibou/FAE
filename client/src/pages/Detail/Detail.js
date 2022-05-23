@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../Navbar/Navbar';
-import { achImUser, enchereUser, searchDetail } from '../../rest/search';
+import { achImUser, deleteAnnonce, enchereUser, searchDetail } from '../../rest/search';
 import { ReactSession } from 'react-client-session';
+import { useNavigate } from 'react-router-dom';
 
 const Detail = () => {
     var urlcourante = document.location.href; 
@@ -10,10 +11,13 @@ const Detail = () => {
     var IDAnnonce = search_params.get('ida');
 
     const IDUtilisateur = ReactSession.get("IDUtilisateur");
+    const IDAdmin = ReactSession.get("IDAdmin");
 
     const [annonce, setAnnonce] = useState([]);
     const [enchere, setEnchere] = useState();
     const [achim, setAchim] = useState(false);
+
+    const navigate = useNavigate();
     
     useEffect (()=>{
         searchDetail(IDAnnonce).then((response)=>{
@@ -42,7 +46,13 @@ const Detail = () => {
         var myDate = new Date(annonceDate);
         return (myDate.getMonth() + 1) + '/' + myDate.getDate() + '/' + myDate.getFullYear() + ' à ' + myDate.getHours() + ' heures et ' + myDate.getMinutes() + ' minutes.';
     }
-   
+    
+    function handleDeleteAnnonce(){
+        deleteAnnonce(annonce);
+        navigate('/');
+        alert('annonce supprimée')
+    }
+
     return (
         <div>
             <Navbar/>
@@ -55,7 +65,7 @@ const Detail = () => {
             <input type='text' id='ench' placeholder='Tapez le montant de votre enchère'/>
             <button onClick={handleEnchere}>Enchérir</button></div>
             {(annonce.IsAchIm==1) ? <button onClick={handleAchIm}>Acheter maintenant pour {annonce.AchatImmediat}€</button> : ''} </>: <>Pour enchérir ou acheter ce produit veuillez vous <a href='/connexion'>connecter</a> ou vous <a href='/inscription'>inscrire</a>.</>}
-            </>:
+            {IDAdmin ? <button onClick={handleDeleteAnnonce}>Supprimer l'annonce</button>: ''}</>:
             <>Félicitations ! Vous avez acheté l'offre n : {IDAnnonce}, vous pouvez consulter votre <a href='/historique'>historique</a>.</>
             }
             
