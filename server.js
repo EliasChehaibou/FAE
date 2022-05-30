@@ -48,10 +48,14 @@ app.listen(PORT, () => {
 // recherche annonces
 app.get("/search/annonces", function (req, res) {
   var query = "SELECT * from annonces";
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.send(JSON.stringify(results));
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // recherche annonces par categorie
@@ -60,10 +64,14 @@ app.get("/search/annonces/categorie", function (req, res) {
   var query =
     "SELECT * from annonces where IDCategorie =" +
     connection.escape(params.IDCate);
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.send(JSON.stringify(results));
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // recherche annonces avec texte
@@ -71,10 +79,14 @@ app.get("/search/annonces/recherche", function (req, res) {
   var params = req.query;
   var query = "SELECT * from annonces where Titre LIKE '%" + params.Texte;
   query += "%'";
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.send(JSON.stringify(results));
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // recherche annonces avec texte et categorie
@@ -82,19 +94,27 @@ app.get("/search/annonces/rechcate", function (req, res) {
   var params = req.query;
   var query = "SELECT * from annonces where Titre LIKE '%" + params.Texte;
   query += "%' AND IDCategorie =" + connection.escape(params.IDCate);
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.send(JSON.stringify(results));
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // recherche categories
 app.get("/search/categories", function (req, res) {
   var query = "SELECT * from categories";
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.send(JSON.stringify(results));
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // formulaire d'inscription
@@ -107,41 +127,49 @@ app.post("/inscription", function (req, res) {
   if (params.Confirm) {
     delete params.Confirm;
   }
-  connection.query(
-    "SELECT MAX(IDUtilisateur) AS IDUser from utilisateurs",
-    function (error, results, fields) {
-      if (error) throw error;
-      userID = results[0].IDUser;
-      connection.query(
-        "INSERT INTO `utilisateurs` SET IDUtilisateur = " +
-          (userID + 1) +
-          ", IDHistorique = " +
-          (userID + 1) +
-          ", ?",
-        params,
-        function (error, results, fields) {
-          if (error) throw error;
-          res.status(204).send();
-        }
-      );
-    }
-  );
+  try {
+    connection.query(
+      "SELECT MAX(IDUtilisateur) AS IDUser from utilisateurs",
+      function (error, results, fields) {
+        if (error) throw error;
+        userID = results[0].IDUser;
+        connection.query(
+          "INSERT INTO `utilisateurs` SET IDUtilisateur = " +
+            (userID + 1) +
+            ", IDHistorique = " +
+            (userID + 1) +
+            ", ?",
+          params,
+          function (error, results, fields) {
+            if (error) throw error;
+            res.status(204).send();
+          }
+        );
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // formulaire de connexion
 app.post("/connexion", function (req, res) {
   var params = req.body;
-  connection.query(
-    "SELECT IDUtilisateur, IDAdmin from utilisateurs WHERE Email='" +
-      params.Email +
-      "' AND password='" +
-      params.Password +
-      "'",
-    function (error, results, fields) {
-      if (error) throw error;
-      res.send(JSON.stringify(results));
-    }
-  );
+  try {
+    connection.query(
+      "SELECT IDUtilisateur, IDAdmin from utilisateurs WHERE Email='" +
+        params.Email +
+        "' AND password='" +
+        params.Password +
+        "'",
+      function (error, results, fields) {
+        if (error) throw error;
+        res.send(JSON.stringify(results));
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // recherche utilisateur
@@ -150,10 +178,14 @@ app.get("/search/utilisateur", function (req, res) {
   var query =
     "SELECT * from utilisateurs where IDUtilisateur =" +
     connection.escape(params.IDUtilisateur);
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.send(JSON.stringify(results));
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // recherche detail
@@ -162,10 +194,14 @@ app.get("/search/detail", function (req, res) {
   var query =
     "SELECT * from annonces where IDAnnonce =" +
     connection.escape(params.IDAnnonce);
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.send(JSON.stringify(results));
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // enchere offre
@@ -179,10 +215,14 @@ app.get("/encherir", function (req, res) {
     params.IDUtilisateur +
     " where IDAnnonce =" +
     params.IDAnnonce;
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.status(204).send();
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.status(204).send();
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // achat immédiat offre
@@ -217,15 +257,19 @@ app.get("/achim", function (req, res) {
     "', '" +
     params.IDUtilisateur +
     "');";
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    query =
-      " DELETE FROM annonces where IDAnnonce = '" + annonce.IDAnnonce + "';";
+  try {
     connection.query(query, function (error, results, fields) {
       if (error) throw error;
-      res.status(204).send();
+      query =
+        " DELETE FROM annonces where IDAnnonce = '" + annonce.IDAnnonce + "';";
+      connection.query(query, function (error, results, fields) {
+        if (error) throw error;
+        res.status(204).send();
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // formulaire poster une annonce
@@ -234,74 +278,82 @@ app.post("/poster", function (req, res) {
   var IDAnnonce1;
   var IDAnnonce2;
   var IDAnnonce;
-  connection.query(
-    "SELECT MAX(IDAnnonce) AS IDAnnonce from annonces",
-    function (error, results, fields) {
-      if (error) throw error;
-      IDAnnonce1 = results[0].IDAnnonce;
-      connection.query(
-        "SELECT MAX(IDAnnonce) AS IDAnnonce from historiques",
-        function (error, results, fields) {
-          if (error) throw error;
-          IDAnnonce2 = results[0].IDAnnonce;
-          IDAnnonce = Math.max(IDAnnonce1, IDAnnonce2);
-          connection.query(
-            "INSERT INTO `annonces` SET DateCrea=NOW(), IDAnnonce = " +
-              (IDAnnonce + 1) +
-              ", IDUtilisateur = " +
-              params.IDUtilisateur +
-              ", ?",
-            params.Annonce,
-            function (error, results, fields) {
-              if (error) throw error;
-              res.status(204).send();
-            }
-          );
-        }
-      );
-    }
-  );
+  try {
+    connection.query(
+      "SELECT MAX(IDAnnonce) AS IDAnnonce from annonces",
+      function (error, results, fields) {
+        if (error) throw error;
+        IDAnnonce1 = results[0].IDAnnonce;
+        connection.query(
+          "SELECT MAX(IDAnnonce) AS IDAnnonce from historiques",
+          function (error, results, fields) {
+            if (error) throw error;
+            IDAnnonce2 = results[0].IDAnnonce;
+            IDAnnonce = Math.max(IDAnnonce1, IDAnnonce2);
+            connection.query(
+              "INSERT INTO `annonces` SET DateCrea=NOW(), IDAnnonce = " +
+                (IDAnnonce + 1) +
+                ", IDUtilisateur = " +
+                params.IDUtilisateur +
+                ", ?",
+              params.Annonce,
+              function (error, results, fields) {
+                if (error) throw error;
+                res.status(204).send();
+              }
+            );
+          }
+        );
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // recherche historique
 app.get("/historique", function (req, res) {
   var params = req.query;
-  connection.query(
-    "SELECT * from historiques where IDUtilisateur =" + params.IDUtilisateur,
-    function (error, results, fields) {
-      if (error) throw error;
-      var vend = JSON.stringify(results);
-      connection.query(
-        "SELECT * from historiques where IDAcheteur =" + params.IDUtilisateur,
-        function (error, results, fields) {
-          if (error) throw error;
-          var ach = JSON.stringify(results);
-          connection.query(
-            "SELECT * from annonces where IDUtilisateur =" +
-              params.IDUtilisateur,
-            function (error, results, fields) {
-              if (error) throw error;
-              var vent = JSON.stringify(results);
-              connection.query(
-                "SELECT * from annonces where IDAcheteur =" +
-                  params.IDUtilisateur,
-                function (error, results, fields) {
-                  if (error) throw error;
-                  var enc = JSON.stringify(results);
-                  res.send({
-                    vendues: vend,
-                    achetees: ach,
-                    vente: vent,
-                    enchere: enc,
-                  });
-                }
-              );
-            }
-          );
-        }
-      );
-    }
-  );
+  try {
+    connection.query(
+      "SELECT * from historiques where IDUtilisateur =" + params.IDUtilisateur,
+      function (error, results, fields) {
+        if (error) throw error;
+        var vend = JSON.stringify(results);
+        connection.query(
+          "SELECT * from historiques where IDAcheteur =" + params.IDUtilisateur,
+          function (error, results, fields) {
+            if (error) throw error;
+            var ach = JSON.stringify(results);
+            connection.query(
+              "SELECT * from annonces where IDUtilisateur =" +
+                params.IDUtilisateur,
+              function (error, results, fields) {
+                if (error) throw error;
+                var vent = JSON.stringify(results);
+                connection.query(
+                  "SELECT * from annonces where IDAcheteur =" +
+                    params.IDUtilisateur,
+                  function (error, results, fields) {
+                    if (error) throw error;
+                    var enc = JSON.stringify(results);
+                    res.send({
+                      vendues: vend,
+                      achetees: ach,
+                      vente: vent,
+                      enchere: enc,
+                    });
+                  }
+                );
+              }
+            );
+          }
+        );
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // recherche liste utilisateurs
@@ -310,10 +362,14 @@ app.get("/search/utilisateurs", function (req, res) {
   var query =
     "SELECT * FROM utilisateurs WHERE NOT IDUtilisateur= " +
     params.IDUtilisateur;
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.send(JSON.stringify(results));
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // supprimer categorie
@@ -325,33 +381,41 @@ app.get("/delete/categorie", function (req, res) {
     " AND Nom='" +
     params.Nom +
     "'";
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.status(204).send();
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.status(204).send();
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // formulaire de création de catégorie
 app.post("/createcate", function (req, res) {
   var params = req.body;
-  connection.query(
-    "SELECT MAX(IDCategorie) AS IDCate from categories",
-    function (error, results, fields) {
-      if (error) throw error;
-      cateID = results[0].IDCate;
-      connection.query(
-        "INSERT INTO `categories` SET IDCategorie = " +
-          (cateID + 1) +
-          ", Nom = '" +
-          params.Nom +
-          "'",
-        function (error, results, fields) {
-          if (error) throw error;
-          res.status(204).send();
-        }
-      );
-    }
-  );
+  try {
+    connection.query(
+      "SELECT MAX(IDCategorie) AS IDCate from categories",
+      function (error, results, fields) {
+        if (error) throw error;
+        cateID = results[0].IDCate;
+        connection.query(
+          "INSERT INTO `categories` SET IDCategorie = " +
+            (cateID + 1) +
+            ", Nom = '" +
+            params.Nom +
+            "'",
+          function (error, results, fields) {
+            if (error) throw error;
+            res.status(204).send();
+          }
+        );
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // supprimer utilisateur
@@ -359,10 +423,14 @@ app.get("/delete/user", function (req, res) {
   var params = req.query;
   var query =
     "DELETE FROM utilisateurs WHERE IDUtilisateur=" + params.IDUtilisateur;
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.status(204).send();
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.status(204).send();
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // supprimer annonce
