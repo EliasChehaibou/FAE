@@ -370,8 +370,12 @@ app.get("/delete/annonce", function (req, res) {
   var params = req.query;
   const annonce = JSON.parse(params.Annonce);
   var query = "DELETE FROM annonces WHERE IDAnnonce=" + annonce.IDAnnonce;
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.status(204).send();
-  });
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.status(204).send();
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
