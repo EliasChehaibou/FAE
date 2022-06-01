@@ -55,7 +55,7 @@ const Detail = () => {
     }
   }
 
-  function handleEnchere() {
+  /*function handleEnchere() {
     let ench = parseInt(document.getElementById("ench").value);
     if (ench && ench > enchere) {
       enchereUser(IDUtilisateur, ench, IDAnnonce);
@@ -65,7 +65,7 @@ const Detail = () => {
     } else {
       alert("enchère invalide");
     }
-  }
+  }*/
 
   function handleAchIm() {
     achImUser(IDUtilisateur, annonce);

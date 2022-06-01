@@ -23,8 +23,11 @@ const Categories = () => {
 
     return (
         <div>
-            <Navbar/>
-            {categories.map((e, i)=><div key={i}><a href={'./recherche?cat='+e.IDCategorie}>{e.Nom}</a></div>)}
+        <Navbar/>
+        <div id="Liste">
+            
+            {categories.map((e, i)=><div id='Cate' key={i}><a href={'./recherche?cat='+e.IDCategorie} id="Lien">{e.Nom}</a></div>)}
+        </div>
         </div>
     );
 };

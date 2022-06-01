@@ -34,7 +34,7 @@ const Annonce = (props) => {
             </a>
           </div>
           <div>Enchere acttuelle: {props.data.Enchere}</div>
-          <div>Achat immédiat: {props.data.Enchere}</div>
+          <div>Achat immédiat: {props.data.AchatImmediat}</div>
           <div>Fin le: {setDate(props.data.DateFin)}</div>
         </div>
       </div>

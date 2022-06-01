@@ -7,10 +7,11 @@ import { ReactSession } from 'react-client-session';
 ReactSession.setStoreType("sessionStorage");
 const Connexion = () => {
 
+  const IDUtilisateur = ReactSession.get("IDUtilisateur");
+  
   let navigate = useNavigate();
   function validateEmail(email) {
-    var re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
 
@@ -44,20 +45,21 @@ const Connexion = () => {
   return (
     <div>
       <Navbar />
+      {!IDUtilisateur ?
       <form
         id="form"
         name="form"
         method="post"
         onSubmit={Verification}
         className="Form"
-        action="http://localhost:2000/connexion"
-      >
+        action="http://localhost:2000/connexion">
         <label htmlFor="email">E-mail</label>
         <input type="text" id="email" name="Email" required />
         <label htmlFor="password">Mot de passe</label>
         <input type="password" id="password" name="Password" required />
         <input type="submit" value="Connexion" />
       </form>
+      :<>Vous êtes déjà connecté</>}
     </div>
   );
 };

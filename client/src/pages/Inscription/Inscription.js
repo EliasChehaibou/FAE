@@ -2,8 +2,12 @@ import React, {useState} from 'react';
 import Navbar from '../../Navbar/Navbar';
 import "./Inscription.css"
 import { createUser } from '../../rest/search';
+import { ReactSession } from 'react-client-session';
 
 const Inscription = () => {
+
+    const IDUtilisateur = ReactSession.get("IDUtilisateur");
+
     const [isOk, setIsOk] = useState(false);
 
     function validateEmail(email) {
@@ -52,7 +56,8 @@ const Inscription = () => {
     return (
         <div className='Inscription'>  
             <Navbar/>
-            <p>Formulaire d'inscription</p>
+            {!IDUtilisateur ?
+            <><p>Formulaire d'inscription</p>
             {!isOk &&
             <form id='form' name='form' onSubmit={Verification} className='Form'>          
                 <label htmlFor="nom">Nom*</label>
@@ -79,7 +84,8 @@ const Inscription = () => {
                 <p>*Champs obligatoires</p>
             </form>}
             {isOk &&
-            <div>Votre inscription est terminée, <a href='/connexion'>cliquez ici</a> pour vous connecter</div>}
+            <div>Votre inscription est terminée, <a href='/connexion'>cliquez ici</a> pour vous connecter</div>}</>
+            :<>Vous êtes déjà connecté</>}
         </div>
         
     );

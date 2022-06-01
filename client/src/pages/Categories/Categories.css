@@ -1,0 +1,29 @@
+#Cate {
+    background: rgba(138, 33, 25, 0.8);
+    width: 20%;
+    margin: 1%;
+    height: 15vh;
+    position: relative;
+    border-radius:10px;
+    top:30%;
+
+}
+
+#Liste {
+    margin-top: 1%;
+    height: 90vh;
+
+    background-color: #292929;
+    display: flex;
+    justify-content: center;
+}
+
+#Lien {
+    font-size: 130%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: #f1f1f1;
+    text-decoration:none; 
+}
