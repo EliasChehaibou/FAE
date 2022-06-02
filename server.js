@@ -10,7 +10,7 @@ var dbpassword = process.env.DB_PASSWORD || "";
 var dbname = process.env.DB_NAME || "fae_database";
 var dev_database_url =
   "mysql://" + dbuser + ":" + dbpassword + "@" + dbhost + "/" + dbname;
-
+const fs = require("fs");
 const app = express();
 
 function handleMysqlContext() {
@@ -275,6 +275,8 @@ app.get("/achim", function (req, res) {
 // formulaire poster une annonce
 app.post("/poster", function (req, res) {
   var params = req.body;
+  console.log(params);
+  console.log(params.Image);
   var IDAnnonce1;
   var IDAnnonce2;
   var IDAnnonce;
@@ -295,7 +297,9 @@ app.post("/poster", function (req, res) {
                 (IDAnnonce + 1) +
                 ", IDUtilisateur = " +
                 params.IDUtilisateur +
-                ", ?",
+                ",Image='" +
+                params.Image +
+                "', ?",
               params.Annonce,
               function (error, results, fields) {
                 if (error) throw error;

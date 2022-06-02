@@ -2,12 +2,6 @@ import React from "react";
 import Navbar from "../../Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
-import { io } from "socket.io-client";
-const socket = io("http://localhost:2001");
-socket.on("hello", (arg) => {
-  console.log(arg); // world
-});
-socket.emit("test", "hello");
 
 const Home = () => {
   const navigate = useNavigate();

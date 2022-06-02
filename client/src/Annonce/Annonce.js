@@ -1,8 +1,9 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import "./Annonce.css";
-import logo from "./logo.png";
+
 const Annonce = (props) => {
   console.log(props.data);
+
   function setDate(annonceDate) {
     var myDate = new Date(annonceDate);
     return (
@@ -23,7 +24,7 @@ const Annonce = (props) => {
   return (
     <div className="container">
       <div className="photo">
-        <img src={logo} alt="Logo" />
+        <img src={props.data.Image}></img>
       </div>
       <div className="informations">
         <div>
