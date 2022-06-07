@@ -22,7 +22,7 @@ const Detail = () => {
   const [annonce, setAnnonce] = useState({});
   const [enchere, setEnchere] = useState();
   const [achim, setAchim] = useState(false);
-  const [dateRest, setDateRest] = useState("");
+  const [dateRest, setDateRest] = useState("00j 00h 00m 00s");
   let enchereValid = false;
   const navigate = useNavigate();
   const socket = io("http://localhost:2001");
@@ -32,9 +32,9 @@ const Detail = () => {
 
   useEffect(() => {
     searchDetail(IDAnnonce).then((response) => {
+      timeRest(response.data[0].DateFin);
       setAnnonce(response.data[0]);
       setEnchere(response.data[0].Enchere);
-      timeRest(response.data[0].DateFin);
     });
 
     socket.on("res_encherir", (arg) => {
@@ -137,7 +137,7 @@ const Detail = () => {
           <div>Enchère de départ : {annonce.EnchereDepart}</div>
           <div>Enchère actuelle : {enchere}</div>
           <div>Fin de la vente le : {setDate(annonce.DateFin)}</div>
-          <div>{dateRest}</div>
+          <div>Temps restant:{dateRest}</div>
           {IDUtilisateur ? (
             <>
               <div>
