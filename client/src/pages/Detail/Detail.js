@@ -94,6 +94,7 @@ const Detail = () => {
   }
   function timeRest(date) {
     var countDownDate = new Date(date).getTime();
+    console.log(date);
     // Update the count down every 1 second
     var x = setInterval(function () {
       // Get today's date and time

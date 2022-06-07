@@ -39,14 +39,14 @@ const Home = () => {
   return (
     <div className="Home">
       <Navbar />    
-      <form class="d-flex" role="search">
+      <form className="d-flex" role="search">
         <input
-          class="form-control me-2"
+          className="form-control me-2"
           type="search"
           aria-label="Search"
           placeholder="Rechercher ici ce que vous voulez..."
         />
-        <button class="btn btn-outline-success" onClick={handleSearch}>
+        <button className="btn btn-outline-success" onClick={handleSearch}>
         Rechercher
         </button>
       </form>
