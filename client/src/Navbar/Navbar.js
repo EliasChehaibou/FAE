@@ -6,30 +6,14 @@ import { ReactSession } from 'react-client-session';
 export default function Navbar() {
   const [ID, setID] = useState(null);
   const [IDA, setIDA] = useState(null);
-  const [toggleMenu, setToggleMenu] = useState(false);
-  const [largeur, setLargeur] = useState(window.innerWidth)
 
-  const toggleNavSmallScreen = () => {
-    setToggleMenu(!toggleMenu);
-  }
+
 
   let navigate = useNavigate();
 
   useEffect( () => {
       setID(ReactSession.get("IDUtilisateur"));
       setIDA(ReactSession.get("IDAdmin"));
-      const changeWidth = () => {
-        setLargeur(window.innerWidth);
-        if (window.innerWidth>500){
-          setToggleMenu(false);
-        }
-      }
-
-      window.addEventListener('resize', changeWidth);
-
-      return () => {
-        window.removeEventListener('resize', changeWidth);
-      }
 
   }, [])
 
@@ -37,40 +21,35 @@ export default function Navbar() {
     ReactSession.set("IDUtilisateur", null);
     ReactSession.set("IDAdmin", null);
     navigate('/');
+    window.location.reload()
   }
 
   
   return (
-    <nav>
-      {(toggleMenu || largeur>500) && (
-        <ul className='liste'>
-          <li className='items'><Link to="/" className='link'>Acceuil</Link></li>
-          <li className='items'><Link to="/categories" className='link'>Catégories</Link></li>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><Link to="/" class="nav-link">Acceuil</Link></li>
+          <li class="nav-item"><Link to="/categories" class="nav-link">Catégories</Link></li>
           
           {(ID==null) && (
             <>
-            <li className='items'><Link to="/connexion" className='link'>Se connecter</Link></li>
-            <li className='items'><Link to="/inscription" className='link'>S'inscrire</Link></li></>
-          )
-
-          }
+            <li class="nav-item"><Link to="/connexion" class="nav-link">Se connecter</Link></li>
+            <li class="nav-item"><Link to="/inscription" class="nav-link">S'inscrire</Link></li></>
+          )}
            
         {(ID!=null) && (
           <>
-          <li className='items'><Link to="/profil" className='link'>Profil</Link></li>
-          <li className='items'><Link to="/poster" className='link'>Poster une annonce</Link></li></> 
-          
+          <li class="nav-item"><Link to="/profil" class="nav-link">Profil</Link></li>
+          <li class="nav-item"><Link to="/poster" class="nav-link">Poster une annonce</Link></li></> 
         )} 
         {(IDA!=null) && (
         <>
-        <li className='items'><Link to="/admin" className='link'>Administration</Link></li></>
+        <li class="nav-item"><Link to="/admin" class="nav-link">Administration</Link></li></>
         )}
         {(ID!=null) &&
-        (<><li className='items'><button onClick={handleDeco} className='button'>Déconnexion</button></li></>
+        (<><li class="nav-item"><button onClick={handleDeco} class="nav-link">Déconnexion</button></li></>
         )}      
         </ul>
-        )}
-        <button onClick={toggleNavSmallScreen} className='btn'>Déplier</button>
     </nav>
   )
 }

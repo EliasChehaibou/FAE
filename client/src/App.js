@@ -12,6 +12,7 @@ import Detail from './pages/Detail/Detail'
 import Historique from './pages/Historique/Historique'
 import Poster from './pages/Poster/Poster'
 import Admin from './pages/Admin/Admin'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
 

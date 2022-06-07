@@ -30,7 +30,7 @@ const Historique = () => {
             <div><h3>Annonces achetées</h3>
                 {achetees.map((e, i)=><div key={i}><Annonce data={e}/></div>)}
             </div>
-            <div><h3>Annonces vendues</h3>
+            <div><h3>Vente terminée</h3>
                 {vendues.map((e, i)=><div key={i}><Annonce data={e}/></div>)}
             </div>
             <div><h3>Annonces en vente</h3>

@@ -122,17 +122,17 @@ const Recherche = () => {
   return (
     <div>
       <Navbar />
-      <div className="rech">
+      <form class="d-flex" role="search">
         <input
-          className="input"
-          type="text"
-          id="rech"
+          class="form-control me-2"
+          type="search"
+          aria-label="Search"
           placeholder="Rechercher ici ce que vous voulez..."
         />
-        <button className="btn_rech" onClick={handleSearch}>
-          Rechercher
+        <button class="btn btn-outline-success" onClick={handleSearch}>
+        Rechercher
         </button>
-      </div>
+      </form>
       {annonce.slice(num_page * 10 - 10, num_page * 10 - 1).map((e, i) => (
         <div key={i}>
           <Annonce data={e} />

@@ -53,11 +53,15 @@ const Connexion = () => {
         onSubmit={Verification}
         className="Form"
         action="http://localhost:2000/connexion">
-        <label htmlFor="email">E-mail</label>
-        <input type="text" id="email" name="Email" required />
-        <label htmlFor="password">Mot de passe</label>
-        <input type="password" id="password" name="Password" required />
-        <input type="submit" value="Connexion" />
+        <div class="mb-3">
+          <label htmlFor="email" class="form-label">E-mail</label>
+          <input type="text" id="email" name="Email"  class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label htmlFor="password" class="form-label">Mot de passe</label>
+          <input type="password" id="password" name="Password" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Connexion</button>
       </form>
       :<>Vous êtes déjà connecté</>}
     </div>

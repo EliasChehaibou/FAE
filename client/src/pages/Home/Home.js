@@ -5,6 +5,7 @@ import "./Home.css";
 import { searchExpirees, searchSuggestions } from "../../rest/search";
 import Annonce from "../../Annonce/Annonce";
 
+
 const Home = () => {
   
   const [expirees, setExpirees] = useState([]);
@@ -38,17 +39,17 @@ const Home = () => {
   return (
     <div className="Home">
       <Navbar />    
-      <div className="rech">
+      <form class="d-flex" role="search">
         <input
-          className="input"
-          type="text"
-          id="rech"
+          class="form-control me-2"
+          type="search"
+          aria-label="Search"
           placeholder="Rechercher ici ce que vous voulez..."
         />
-        <button className="btn_rech" onClick={handleSearch}>
-        <img className="loupe" src="/static/loupe.png"></img>
+        <button class="btn btn-outline-success" onClick={handleSearch}>
+        Rechercher
         </button>
-      </div>
+      </form>
       <div>
         <h3>Suggestions</h3>
         {suggestions.map((e, i) => (
@@ -65,7 +66,6 @@ const Home = () => {
         </div>
       ))}
       </div>
-      
 
       
     </div>
