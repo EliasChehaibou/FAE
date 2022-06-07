@@ -451,3 +451,30 @@ app.get("/delete/annonce", function (req, res) {
     console.log(error);
   }
 });
+
+// annonces bientot expirées
+app.get("/search/annonces/expirees", function (req, res) {
+  var query = "SELECT * from annonces ORDER BY DateFin ASC LIMIT 5;"
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// suggestions annonces
+app.get("/search/annonces/suggestions", function (req, res) {
+  var params = req.query;
+  var query = "SELECT * FROM annonces WHERE IDAnnonce NOT IN ("+params.IDs.join(',')+") ORDER BY RAND ( ) LIMIT 5;"
+  try {
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.send(JSON.stringify(results));
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});

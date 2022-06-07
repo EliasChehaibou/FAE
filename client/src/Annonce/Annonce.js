@@ -2,7 +2,6 @@ import { React, useState, useEffect } from "react";
 import "./Annonce.css";
 
 const Annonce = (props) => {
-  console.log(props.data);
 
   function setDate(annonceDate) {
     var myDate = new Date(annonceDate);

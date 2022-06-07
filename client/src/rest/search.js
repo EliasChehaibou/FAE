@@ -73,3 +73,11 @@ export const deleteUtilisateur = (IDUtilisateur) => {
 export const deleteAnnonce = (Annonce) => {
   return axios.get(`http://localhost:2000/delete/annonce`, {params:{Annonce: Annonce}});
 }
+
+export const searchExpirees = () => {
+  return axios.get(`http://localhost:2000/search/annonces/expirees`);
+}
+
+export const searchSuggestions= (IDs) => {
+  return axios.get(`http://localhost:2000/search/annonces/suggestions`, {params:{IDs: IDs}});
+}

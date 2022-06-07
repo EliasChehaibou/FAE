@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
+import { searchExpirees, searchSuggestions } from "../../rest/search";
+import Annonce from "../../Annonce/Annonce";
 
 const Home = () => {
+  
+  const [expirees, setExpirees] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    searchExpirees().then((response) => {
+      setExpirees(response.data);
+      let IDs = []
+      for (let i=0; i<response.data.length; i++) {
+        IDs.push(response.data[i].IDAnnonce);
+      }
+      searchSuggestions(IDs).then((response) => {
+        setSuggestions(response.data);
+      })  
+    })
+    .catch(() => {
+      // en cas d'erreur
+    });;
+  }, []);
 
   function handleSearch() {
     if (document.getElementById("rech").value) {
@@ -16,12 +37,7 @@ const Home = () => {
 
   return (
     <div className="Home">
-      <div className="logo">
-        <img src="/static/logo.png" alt="Foncez aux enchères" className="img" />
-      </div>
-
-      <h1 className="titre">Chez FAE on a tout ce qu'on veut !</h1>
-      <Navbar />
+      <Navbar />    
       <div className="rech">
         <input
           className="input"
@@ -30,9 +46,28 @@ const Home = () => {
           placeholder="Rechercher ici ce que vous voulez..."
         />
         <button className="btn_rech" onClick={handleSearch}>
-          Rechercher
+        <img className="loupe" src="/static/loupe.png"></img>
         </button>
       </div>
+      <div>
+        <h3>Suggestions</h3>
+        {suggestions.map((e, i) => (
+        <div key={i}>
+          <Annonce data={e} />
+        </div>
+      ))}
+      </div>
+      <div>
+        <h3>Bientôt expirées</h3>
+        {expirees.map((e, i) => (
+        <div key={i}>
+          <Annonce data={e} />
+        </div>
+      ))}
+      </div>
+      
+
+      
     </div>
   );
 };
