@@ -29,11 +29,13 @@ const Home = () => {
   }, []);
 
   function handleSearch() {
+    console.log("o")
     if (document.getElementById("rech").value) {
       navigate("/recherche?rech=" + document.getElementById("rech").value);
     } else {
       navigate("/recherche");
     }
+    
   }
 
   return (
@@ -41,6 +43,7 @@ const Home = () => {
       <Navbar />    
       <form className="d-flex" role="search">
         <input
+          id="rech"
           className="form-control me-2"
           type="search"
           aria-label="Search"

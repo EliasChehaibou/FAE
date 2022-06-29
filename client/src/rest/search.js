@@ -42,8 +42,8 @@ export const enchereUser = (IDUtilisateur, Enchere, IDAnnonce) => {
   return axios.get(`http://localhost:2000/encherir`,{params:{IDUtilisateur: IDUtilisateur, Enchere: Enchere, IDAnnonce: IDAnnonce}});
 }
 
-export const achImUser = (IDUtilisateur, Annonce) => {
-  return axios.get(`http://localhost:2000/achim`,{params:{IDUtilisateur: IDUtilisateur, Annonce: Annonce}});
+export const achImUser = (IDUtilisateur, IDAnnonce) => {
+  return axios.get(`http://localhost:2000/achim`,{params:{IDUtilisateur: IDUtilisateur, IDAnnonce: IDAnnonce}});
 }
 
 export const posterAnnonce = (params) => {

@@ -9,6 +9,7 @@ import {
 import { ReactSession } from "react-client-session";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
+import "./Detail.css";
 
 const Detail = () => {
   var urlcourante = document.location.href;
@@ -59,30 +60,19 @@ const Detail = () => {
     }
   }
 
-  /*function handleEnchere() {
-    let ench = parseInt(document.getElementById("ench").value);
-    if (ench && ench > enchere) {
-      enchereUser(IDUtilisateur, ench, IDAnnonce);
-
-      setEnchere(ench);
-      alert("enchère réussie");
-    } else {
-      alert("enchère invalide");
-    }
-  }*/
-
   function handleAchIm() {
-    achImUser(IDUtilisateur, annonce);
+    console.log(annonce)
+    achImUser(IDUtilisateur, annonce.IDAnnonce);
     setAchim(true);
   }
 
   function setDate(annonceDate) {
     var myDate = new Date(annonceDate);
     return (
-      myDate.getMonth() +
+      myDate.getDate() +
       1 +
       "/" +
-      myDate.getDate() +
+      myDate.getMonth() +
       "/" +
       myDate.getFullYear() +
       " à " +
@@ -94,12 +84,10 @@ const Detail = () => {
   }
   function timeRest(date) {
     var countDownDate = new Date(date).getTime();
-    console.log(date);
     // Update the count down every 1 second
     var x = setInterval(function () {
       // Get today's date and time
       var now = new Date().getTime();
-      console.log("time");
       // Find the distance between now and the count down date
       var distance = countDownDate - now;
 
@@ -132,25 +120,29 @@ const Detail = () => {
     <div>
       <Navbar />
       {!achim ? (
-        <>
+        <div className="center">
+          <div>
+          <img src={annonce.Image} className="img-thumbnail"></img>
           <div>Titre de l'annonce : {annonce.Titre}</div>
           <div>Description : {annonce.Description}</div>
-          <div>Enchère de départ : {annonce.EnchereDepart}</div>
-          <div>Enchère actuelle : {enchere}</div>
+          <div>Enchère de départ : {annonce.EnchereDepart}€</div>
+          <div>Enchère actuelle : {enchere!=null ? <>{enchere}€</>: <>Aucune enchère pour le moment</>}</div>
           <div>Fin de la vente le : {setDate(annonce.DateFin)}</div>
-          <div>Temps restant:{dateRest}</div>
+          <div>Temps restant : {dateRest}</div>
           {IDUtilisateur ? (
             <>
               <div>
                 <input
+                  style={{marginTop:'2%'}} 
                   type="text"
+                  className="form-control"
                   id="ench"
-                  placeholder="Tapez le montant de votre enchère"
+                  placeholder="Tapez le montant de votre enchère en €"
                 />
-                <button onClick={handleEnchereS}>Enchérir</button>
+                <button style={{marginTop:'1%'}} className="btn btn-light" onClick={handleEnchereS}>Enchérir</button>
               </div>
               {annonce.IsAchIm == 1 ? (
-                <button onClick={handleAchIm}>
+                <button className="btn btn-dark" style={{marginTop:'2%'}}  onClick={handleAchIm}>
                   Acheter maintenant pour {annonce.AchatImmediat}€
                 </button>
               ) : (
@@ -165,11 +157,12 @@ const Detail = () => {
             </>
           )}
           {IDAdmin ? (
-            <button onClick={handleDeleteAnnonce}>Supprimer l'annonce</button>
+            <div><button className="btn btn-danger" style={{marginTop:'5%'}} onClick={handleDeleteAnnonce}>Supprimer l'annonce</button></div>
           ) : (
             ""
           )}
-        </>
+        </div>
+        </div>
       ) : (
         <>
           Félicitations ! Vous avez acheté l'offre n : {IDAnnonce}, vous pouvez

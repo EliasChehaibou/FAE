@@ -9,6 +9,7 @@ import {
   searchAnnonceRechCate,
 } from "../../rest/search";
 import { useNavigate } from "react-router-dom";
+import "./Recherche.css"
 
 const Recherche = () => {
   var urlcourante = document.location.href;
@@ -32,7 +33,7 @@ const Recherche = () => {
       searchAnnonceRechCate(rech, IDcat)
         .then((response) => {
           setAnnonce(response.data);
-          setTotalPage(response.data.length / 10);
+          setTotalPage(Math.round(response.data.length / 5));
         })
         .catch(() => {
           // en cas d'erreur
@@ -41,7 +42,7 @@ const Recherche = () => {
       searchAnnonceCate(IDcat)
         .then((response) => {
           setAnnonce(response.data);
-          setTotalPage(response.data.length / 10);
+          setTotalPage(Math.round(response.data.length / 5));
         })
         .catch(() => {
           // en cas d'erreur
@@ -50,7 +51,7 @@ const Recherche = () => {
       searchAnnonceRech(rech)
         .then((response) => {
           setAnnonce(response.data);
-          setTotalPage(response.data.length / 10);
+          setTotalPage(Math.round(response.data.length / 5));
         })
         .catch(() => {
           // en cas d'erreur
@@ -59,13 +60,14 @@ const Recherche = () => {
       searchAnnonce()
         .then((response) => {
           setAnnonce(response.data);
-          setTotalPage(response.data.length / 10);
+          setTotalPage(Math.round(response.data.length / 5));
         })
         .catch(() => {
           // en cas d'erreur
         });
+        
     }
-
+    
     searchCategories()
       .then((response) => {
         setCategories(response.data);
@@ -79,12 +81,8 @@ const Recherche = () => {
     search();
   }, []);
 
-  function handlePagePlus1() {
+  function handlePageSuiv() {
     setNumPage(num_page + 1);
-  }
-
-  function handlePagePlus2() {
-    setNumPage(num_page + 2);
   }
 
   function handlePagePrec() {
@@ -122,59 +120,50 @@ const Recherche = () => {
   return (
     <div>
       <Navbar />
-      <form class="d-flex" role="search">
-        <input
-          class="form-control me-2"
-          type="search"
-          aria-label="Search"
-          placeholder="Rechercher ici ce que vous voulez..."
-        />
-        <button class="btn btn-outline-success" onClick={handleSearch}>
-        Rechercher
-        </button>
+      <form className="d-flex" role="search" id="rechbar">
+        <input className="form-control me-2" type="search" aria-label="Search" placeholder="Rechercher ici ce que vous voulez..."/>
+        <button className="btn btn-outline-success" onClick={handleSearch}>Rechercher</button>
       </form>
-      {annonce.slice(num_page * 10 - 10, num_page * 10 - 1).map((e, i) => (
-        <div key={i}>
-          <Annonce data={e} />
+      <div className="wrapper">
+        <nav id="sidebar">
+        <p>Filtrer par catégorie</p>
+          <div className="form-check">
+          {categories.map((e, i) => (
+            <div key={i}>
+              <input className="form-check-input" type="radio" name="categorie" id={e.IDCategorie} value={e.IDCategorie}/>
+              <label className="form-check-label" htmlFor={e.IDCategorie}>{e.Nom}</label>
+            </div>
+          ))}
+          </div>
+        </nav>
+        <div >
+        {annonce.slice(num_page * 5 - 5, num_page * 5).map((e, i) => (
+          <div className="annonce" key={i}>
+            <Annonce data={e} />
+          </div>
+        ))}   
         </div>
-      ))}
-      {categories.map((e, i) => (
-        <div key={i}>
-          <input
-            type="radio"
-            name="categorie"
-            id={e.IDCategorie}
-            value={e.IDCategorie}
-          />
-          <label htmlFor={e.IDCategorie}>{e.Nom}</label>
-        </div>
-      ))}
-      <ul>
-        {num_page > 1 ? (
-          <li>
-            <button onClick={handlePagePrec}>Page précédente</button>
+        </div>   
+        <ul className="pagination">
+          {num_page > 1 ? (
+            <li className="page-item">
+              <button className="page-link" onClick={handlePagePrec}>Page précédente</button>
+            </li>
+          ) : (
+            ""
+          )}
+          <li className="page-item">
+            <button className="page-link">{num_page}</button>
           </li>
-        ) : (
-          ""
-        )}
-        <li>
-          <button>{num_page}</button>
-        </li>
-        {num_page + 1 <= total_page ? (
-          <li>
-            <button onClick={handlePagePlus1}>{num_page + 1}</button>
-          </li>
-        ) : (
-          ""
-        )}
-        {num_page + 2 <= total_page ? (
-          <li>
-            <button onClick={handlePagePlus2}>{num_page + 2}</button>
-          </li>
-        ) : (
-          ""
-        )}
-      </ul>
+          {num_page + 1 <= total_page ? (
+            <li className="page-item">
+              <button className="page-link" onClick={handlePageSuiv}>Page suivante</button>
+            </li>
+          ) : (
+            ""
+          )}
+        </ul>
+      
     </div>
   );
 };

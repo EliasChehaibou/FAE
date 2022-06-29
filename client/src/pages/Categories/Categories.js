@@ -24,9 +24,8 @@ const Categories = () => {
     return (
         <div>
         <Navbar/>
-        <div id="Liste">
-            
-            {categories.map((e, i)=><div id='Cate' key={i}><a href={'./recherche?cat='+e.IDCategorie} id="Lien">{e.Nom}</a></div>)}
+        <div className="list-group">
+            {categories.map((e, i)=><div id='Cate' key={i}><a className="list-group-item list-group-item-action" href={'./recherche?cat='+e.IDCategorie} id="Lien">{e.Nom}</a></div>)}
         </div>
         </div>
     );

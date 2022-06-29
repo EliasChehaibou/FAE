@@ -1,0 +1,8 @@
+.center{
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}
+.img-thumbnail{
+    margin-bottom: 2%;
+}

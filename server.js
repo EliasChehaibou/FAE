@@ -206,7 +206,6 @@ app.get("/search/detail", function (req, res) {
 
 // enchere offre
 app.get("/encherir", function (req, res) {
-  console.log("ok");
   var params = req.query;
   var query =
     "UPDATE annonces set Enchere =" +
@@ -228,45 +227,23 @@ app.get("/encherir", function (req, res) {
 // achat immédiat offre
 app.get("/achim", function (req, res) {
   var params = req.query;
-  var annonce = JSON.parse(params.Annonce);
-  var DateCrea = annonce.DateCrea.slice(0, 19).replace("T", " ");
-  var DateFin = annonce.DateFin.slice(0, 19).replace("T", " ");
-  var query =
-    "INSERT INTO historiques(IDAnnonce, IDUtilisateur, EnchereDepart, Enchere, Description, AchatImmediat, IsAchIm, IDCategorie, DateCrea, DateFin, Titre, IDAcheteur) VALUES ('" +
-    annonce.IDAnnonce +
-    "', '" +
-    annonce.IDUtilisateur +
-    "', '" +
-    annonce.EnchereDepart +
-    "', '" +
-    annonce.Enchere +
-    "', '" +
-    annonce.Description +
-    "', '" +
-    annonce.AchatImmediat +
-    "', '" +
-    annonce.IsAchIm +
-    "', '" +
-    annonce.IDCategorie +
-    "', '" +
-    DateCrea +
-    "', '" +
-    DateFin +
-    "', '" +
-    annonce.Titre +
-    "', '" +
-    params.IDUtilisateur +
-    "');";
+  var IDAnnonce = params.IDAnnonce;
+  var IDUtilisateur = params.IDUtilisateur;
+  var query = "UPDATE annonces SET IDAcheteur = "+IDUtilisateur+" WHERE IDAnnonce = '" + IDAnnonce + "';";
   try {
     connection.query(query, function (error, results, fields) {
       if (error) throw error;
-      query =
-        " DELETE FROM annonces where IDAnnonce = '" + annonce.IDAnnonce + "';";
+      var query = "INSERT INTO historiques SELECT * FROM annonces WHERE IDAnnonce = '" + IDAnnonce + "';";
       connection.query(query, function (error, results, fields) {
         if (error) throw error;
-        res.status(204).send();
+        query =
+          " DELETE FROM annonces where IDAnnonce = '" + IDAnnonce + "';";
+        connection.query(query, function (error, results, fields) {
+          if (error) throw error;
+          res.status(204).send();
+        });
       });
-    });
+    });   
   } catch (error) {
     console.log(error);
   }
@@ -275,8 +252,6 @@ app.get("/achim", function (req, res) {
 // formulaire poster une annonce
 app.post("/poster", function (req, res) {
   var params = req.body;
-  console.log(params);
-  console.log(params.Image);
   var IDAnnonce1;
   var IDAnnonce2;
   var IDAnnonce;

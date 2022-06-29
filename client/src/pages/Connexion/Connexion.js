@@ -46,23 +46,42 @@ const Connexion = () => {
     <div>
       <Navbar />
       {!IDUtilisateur ?
-      <form
-        id="form"
-        name="form"
-        method="post"
-        onSubmit={Verification}
-        className="Form"
-        action="http://localhost:2000/connexion">
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">E-mail</label>
-          <input type="text" id="email" name="Email"  className="form-control" required />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Mot de passe</label>
-          <input type="password" id="password" name="Password" className="form-control" required />
-        </div>
-        <button type="submit" className="btn btn-primary">Connexion</button>
-      </form>
+      <section className="vh-100" style={{backgroundColor: "#eee"}}>
+        <div className="container h-100" style={{display: 'flex', justifyContent: 'center'}}>
+            <div className="row d-flex justify-content-center align-items-center h-100">
+                <div className="col-lg-12 col-xl-11" style={{minWidth: '150%'}}>
+                    <div className="card text-black" style={{borderRadius: '25px', marginTop: '15px', marginBottom: '15px'}}>
+                        <div className="card-body p-md-5" >
+                            <div className="justify-content-center" style={{minWidth: '100%', display:'flex'}}>
+                                <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                                    <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style={{width:'100%', textAlign:'center'}}>Formulaire de connexion</p>
+
+                                    <form id="form" name="form" method="post" onSubmit={Verification} className="mx-1 mx-md-4" action="http://localhost:2000/connexion">
+                                      <div className="d-flex flex-row align-items-center mb-4">
+                                          <div className="form-outline flex-fill mb-0">
+                                            <label htmlFor="email" className="form-label">E-mail</label>
+                                            <input type="text" id="email" name="Email"  className="form-control" required />      
+                                          </div>
+                                      </div>
+                                      <div className="d-flex flex-row align-items-center mb-4">
+                                        <div className="form-outline flex-fill mb-0">
+                                          <label htmlFor="password" className="form-label">Mot de passe</label>
+                                          <input type="password" id="password" name="Password" className="form-control" required />
+                                        </div>
+                                      </div>
+                                      <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                        <button type="submit" className="btn btn-primary btn-lg">Se connecter</button>
+                                      </div>
+                                    </form>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
       :<>Vous êtes déjà connecté</>}
     </div>
   );

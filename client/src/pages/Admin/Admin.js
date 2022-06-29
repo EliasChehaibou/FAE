@@ -36,12 +36,8 @@ const Admin = () => {
         search();
     },[]);
 
-    function handlePagePlus1(){
+    function handlePageSuiv(){
         setNumPage(num_page+1);
-    }
-
-    function handlePagePlus2(){
-        setNumPage(num_page+2);
     }
     
     function handlePagePrec(){
@@ -82,18 +78,23 @@ const Admin = () => {
             <Navbar/>
             {IDUtilisateur ?
             <>{IDAdmin ?
-            <><ul>{categories.map((e, i)=><div id={e.Nom} key={i}><li>{e.Nom} <button id={e.IDCategorie} onClick={()=>handleDeleteCate(e.Nom, e.IDCategorie)}>Supprimer</button></li></div>)}</ul><form id='form' name='form' onSubmit={AjoutCate} className='Form'><label htmlFor="nom">Nom de la catégorie : </label><input type="text" id="nom" name="Nom" required/><input type='submit' value='Ajouter une nouvelle catégorie'/></form>
-            <ul>{utilisateurs.slice((num_page*10)-10,(num_page*10)-1).map((e, i)=><div id={e.Nom} key={i}><li>{e.Nom+" "+e.Prenom} <button id={e.IDUtilisateur} onClick={()=>handleDeleteUser(e.Nom, e.IDUtilisateur)}>Supprimer</button></li></div>)}</ul>
-            <ul>
+            <><h3 style={{marginTop:'0.5%', marginLeft:'0.5%'}}>Liste des catégories</h3><ul className="list-group">{categories.map((e, i)=><div id={e.Nom} key={i}><li className="list-group-item">{e.Nom} <button className="btn btn-outline-danger" id={e.IDCategorie} onClick={()=>handleDeleteCate(e.Nom, e.IDCategorie)}>Supprimer</button></li></div>)}</ul>
+            <form id='form' name='form' onSubmit={AjoutCate} className="form-inline">
+                <div className="form-group mx-sm-3 mb-2">
+                    <label htmlFor="nom" className="sr-only">Nom de la catégorie : </label>
+                    <input type="text" id="nom" name="Nom" className="form-control" required/>     
+                </div>
+                <input type='submit' className="btn btn-primary mb-2" value='Ajouter une nouvelle catégorie' style={{marginLeft:'1rem'}}/>
+            </form>
+            <h3 style={{marginTop:'2%', marginLeft:'0.5%'}}>Liste des utilisateurs</h3>
+            <ul className="list-group">{utilisateurs.slice((num_page*10)-10,(num_page*10)-1).map((e, i)=><div id={e.Nom} key={i}><li className="list-group-item">{e.Nom+" "+e.Prenom} <button className="btn btn-outline-danger" id={e.IDUtilisateur} onClick={()=>handleDeleteUser(e.Nom, e.IDUtilisateur)}>Supprimer</button></li></div>)}</ul>
+            <ul className="pagination">
                 {num_page>1 ?
-                    <li><button onClick={handlePagePrec}>Page précédente</button></li>: ''
+                    <li className="page-item"><button className="page-link" onClick={handlePagePrec}>Page précédente</button></li>: ''
                 }
-                <li><button>{num_page}</button></li>
+                <li className="page-item"><button className="page-link">{num_page}</button></li>
                 {(num_page+1)<=total_page ?
-                    <li><button onClick={handlePagePlus1}>{num_page+1}</button></li>: ''
-                }
-                {num_page+2<=total_page ?
-                    <li><button onClick={handlePagePlus2}>{num_page+2}</button></li>: ''
+                    <li className="page-item"><button className="page-link" onClick={handlePageSuiv}>Page suivante</button></li>: ''
                 }
             </ul>
             </>
