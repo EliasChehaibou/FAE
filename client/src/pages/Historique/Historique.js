@@ -26,19 +26,23 @@ const Historique = () => {
         <div>
             <Navbar/>
             {IDUtilisateur ? <>
-            <h2>Mon historique</h2>
-            <div><h3>Annonces achetées</h3>
+            <h2 style={{marginTop:'0.3%', marginLeft:'0.3%'}}>Mon historique</h2>
+            {achetees.length>0 ?
+            <div><h3 style={{marginLeft:'0.5%'}}>Annonces achetées</h3>
                 {achetees.map((e, i)=><div key={i}><Annonce data={e}/></div>)}
-            </div>
-            <div><h3>Vente terminée</h3>
-                {vendues.map((e, i)=><div key={i}><Annonce data={e}/></div>)}
-            </div>
-            <div><h3>Annonces en vente</h3>
+            </div>:''}
+            {vendues.length>0 ?
+            <div><h3 style={{marginLeft:'0.5%'}}>Vente terminée</h3>
+                 {vendues.map((e, i)=><div key={i}><Annonce data={e}/></div>)}
+            </div>:''}
+            {vente.length>0 ? 
+            <div><h3 style={{ marginLeft:'0.5%'}}>Annonces en vente</h3>
                 {vente.map((e, i)=><div key={i}><Annonce data={e}/></div>)}
-            </div>
-            <div><h3>Enchères en cours</h3>
+            </div>:''}
+            {enchere.length>0 ? 
+            <div><h3 style={{ marginLeft:'0.5%'}}>Enchères en cours</h3>
                 {enchere.map((e, i)=><div key={i}><Annonce data={e}/></div>)}
-            </div>
+            </div>:''}
             </>:<>Historique non trouvé veuillez vous <a href='/connexion'>connecter</a> ou vous <a href='/inscription'>inscrire</a>.</>}
         </div>
     );

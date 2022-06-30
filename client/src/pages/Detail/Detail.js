@@ -61,7 +61,6 @@ const Detail = () => {
   }
 
   function handleAchIm() {
-    console.log(annonce)
     achImUser(IDUtilisateur, annonce.IDAnnonce);
     setAchim(true);
   }

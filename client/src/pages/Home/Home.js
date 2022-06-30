@@ -29,7 +29,6 @@ const Home = () => {
   }, []);
 
   function handleSearch() {
-    console.log("o")
     if (document.getElementById("rech").value) {
       navigate("/recherche?rech=" + document.getElementById("rech").value);
     } else {
@@ -54,7 +53,7 @@ const Home = () => {
         </button>
       </form>
       <div>
-        <h3>Suggestions</h3>
+        <h3 style={{marginTop:'0.5%', marginLeft:'0.5%'}}>Suggestions</h3>
         {suggestions.map((e, i) => (
         <div key={i}>
           <Annonce data={e} />
@@ -62,7 +61,7 @@ const Home = () => {
       ))}
       </div>
       <div>
-        <h3>Bientôt expirées</h3>
+        <h3 style={{marginTop:'1%', marginLeft:'0.5%'}}>Bientôt expirées</h3>
         {expirees.map((e, i) => (
         <div key={i}>
           <Annonce data={e} />

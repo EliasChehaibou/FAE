@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import { connectUser } from "../../rest/search";
@@ -7,26 +7,13 @@ import { ReactSession } from 'react-client-session';
 ReactSession.setStoreType("sessionStorage");
 const Connexion = () => {
 
+  const [error, setError] = useState(false);
   const IDUtilisateur = ReactSession.get("IDUtilisateur");
   
   let navigate = useNavigate();
-  function validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-  }
 
   function Verification(event) {
     event.preventDefault();
-    
-    // Récupérer la valeur du champ email
-    var Email = document.getElementById("email").value;
-
-    // Contrôle sur l'email
-    if (Email == "" || !validateEmail(Email)) {
-      document.getElementById("email").style.backgroundColor = "red";
-      document.getElementById("email").style.color = "#FFF";
-      return false;
-    }
 
     var myForm = document.getElementById("form");
     let formData = new FormData(myForm);
@@ -38,7 +25,10 @@ const Connexion = () => {
             if (response.data[0].IDAdmin!=null) {
               ReactSession.set("IDAdmin", response.data[0].IDAdmin);
             }
-            navigate('/profil');}
+            navigate('/profil');
+          } else {
+            setError(true);
+          }
     })
   }
   
@@ -73,6 +63,10 @@ const Connexion = () => {
                                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <button type="submit" className="btn btn-primary btn-lg">Se connecter</button>
                                       </div>
+                                      {error && 
+                                        <div class="alert alert-danger" role="alert">
+                                          L'authentification a échoué. Vérifier votre identifiant et votre mot de passe.
+                                        </div>}
                                     </form>
                                 </div>
                               </div>

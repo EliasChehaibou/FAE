@@ -9,6 +9,7 @@ const Inscription = () => {
     const IDUtilisateur = ReactSession.get("IDUtilisateur");
 
     const [isOk, setIsOk] = useState(false);
+    const [error, setError] = useState(false);
 
     function validateEmail(email) {
         var re =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -20,37 +21,51 @@ const Inscription = () => {
         return re.test(password);
     }
     
-    function Verification() {
-        // Récupérer la valeur des champs password, email et confirm
+    function Verification(event) {
+        event.preventDefault();
+       
         var Email = document.getElementById('email').value;
         var Password = document.getElementById('password').value;
         var Confirm = document.getElementById('confirm').value;
-        // Contrôle sur l'email
-        if(Email==='' || !validateEmail(Email)) {             
+
+        document.getElementById('email').style.backgroundColor="#FFF";
+        document.getElementById('email').style.color="#212529";
+        document.getElementById('password').style.backgroundColor="#FFF";
+        document.getElementById('password').style.color="#212529";
+        document.getElementById('confirm').style.backgroundColor="#FFF";
+        document.getElementById('confirm').style.color="#212529";
+        
+        var ok = true;
+
+        if (Email==='' || !validateEmail(Email)) {             
             document.getElementById('email').style.backgroundColor="red";
             document.getElementById('email').style.color="#FFF";
-            return false;
-        }
-
-        // Contrôle sur le mot de passe
-        if(Password==='' || !validatePassword(Password)) {
+            ok = false;
+        } 
+        if (Password==='' || !validatePassword(Password)) {
             document.getElementById('password').style.backgroundColor="red";
             document.getElementById('password').style.color="#FFF";
-            return false;
+            ok = false;
         }
-
-        // Confirmation du mot de passe
-        if(Password!==Confirm) {     
+        if (Password!==Confirm) {     
             document.getElementById('confirm').style.backgroundColor="red";
             document.getElementById('confirm').style.color="#FFF";
+            ok = false;
+        } 
+        if (ok) {
+            var myForm = document.getElementById('form');
+            let formData = new FormData(myForm);
+            var object = {};
+            formData.forEach((value, key) => (object[key] = value));
+            createUser(object);
+            setIsOk(true);
+        } else {
+            setError(true)
             return false;
-        }    
-        var myForm = document.getElementById('form');
-        let formData = new FormData(myForm);
-        var object = {};
-        formData.forEach((value, key) => (object[key] = value));
-        createUser(object);
-        setIsOk(true);
+        }
+        
+           
+        
     }
 
     return (
@@ -119,11 +134,14 @@ const Inscription = () => {
                                                         <input type="password" id="confirm" name="Confirm" className="form-control" required/>   
                                                     </div>
                                                 </div>
-                                                
                                                 <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                                     <input type='submit' className="btn btn-primary btn-lg" value="S'inscrire"/>
                                                 </div>
                                                 <p>*Champs obligatoires</p>
+                                                {error && 
+                                                    <div class="alert alert-danger" role="alert">
+                                                    L'inscription a échoué. Vérifier les champs surlignés en rouge.
+                                                    </div>}
                                             </form>
                                         </div>
                                     </div>

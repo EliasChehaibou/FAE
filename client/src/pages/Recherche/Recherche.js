@@ -27,6 +27,7 @@ const Recherche = () => {
   const [num_page, setNumPage] = useState(1);
   const [total_page, setTotalPage] = useState(0);
   const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(false);
 
   function search() {
     if (IDcat && rech) {
@@ -34,6 +35,9 @@ const Recherche = () => {
         .then((response) => {
           setAnnonce(response.data);
           setTotalPage(Math.round(response.data.length / 5));
+          if (!response.data.length>0) {
+            setError(true)
+          }
         })
         .catch(() => {
           // en cas d'erreur
@@ -43,6 +47,9 @@ const Recherche = () => {
         .then((response) => {
           setAnnonce(response.data);
           setTotalPage(Math.round(response.data.length / 5));
+          if (!response.data.length>0) {
+            setError(true)
+          }
         })
         .catch(() => {
           // en cas d'erreur
@@ -52,6 +59,9 @@ const Recherche = () => {
         .then((response) => {
           setAnnonce(response.data);
           setTotalPage(Math.round(response.data.length / 5));
+          if (!response.data.length>0) {
+            setError(true)
+          }
         })
         .catch(() => {
           // en cas d'erreur
@@ -61,6 +71,9 @@ const Recherche = () => {
         .then((response) => {
           setAnnonce(response.data);
           setTotalPage(Math.round(response.data.length / 5));
+          if (!response.data.length>0) {
+            setError(true)
+          }
         })
         .catch(() => {
           // en cas d'erreur
@@ -91,7 +104,8 @@ const Recherche = () => {
 
   const navigate = useNavigate();
 
-  function handleSearch() {
+  function handleSearch(event) {
+    event.preventDefault();
     var boutons = document.getElementsByName("categorie");
     var valeur;
     for (var i = 0; i < boutons.length; i++) {
@@ -99,7 +113,6 @@ const Recherche = () => {
         valeur = boutons[i].value;
       }
     }
-
     if (document.getElementById("rech").value && valeur) {
       navigate(
         "/recherche?rech=" +
@@ -112,16 +125,16 @@ const Recherche = () => {
     } else if (valeur) {
       navigate("/recherche?cat=" + valeur);
     } else {
-      navigate("/recherche");
+      navigate("/recherche");  
     }
-    window.location.reload();
+    window.location.reload()
   }
 
   return (
     <div>
       <Navbar />
       <form className="d-flex" role="search" id="rechbar">
-        <input className="form-control me-2" type="search" aria-label="Search" placeholder="Rechercher ici ce que vous voulez..."/>
+        <input className="form-control me-2" type="search" id="rech" aria-label="Search" placeholder="Rechercher ici ce que vous voulez..."/>
         <button className="btn btn-outline-success" onClick={handleSearch}>Rechercher</button>
       </form>
       <div className="wrapper">
@@ -136,13 +149,17 @@ const Recherche = () => {
           ))}
           </div>
         </nav>
-        <div >
-        {annonce.slice(num_page * 5 - 5, num_page * 5).map((e, i) => (
+        
+          {error &&<div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+            <div className="alert alert-danger" style={{maxHeight:'40%'}} role="alert">
+            Désolé, aucune annonce ne correspond à vos critères.
+          </div></div>}
+        {!error && <div>{annonce.slice(num_page * 5 - 5, num_page * 5).map((e, i) => (
           <div className="annonce" key={i}>
             <Annonce data={e} />
           </div>
-        ))}   
-        </div>
+        ))} </div>} 
+        
         </div>   
         <ul className="pagination">
           {num_page > 1 ? (

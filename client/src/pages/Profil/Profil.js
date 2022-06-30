@@ -15,6 +15,18 @@ const Profil = () => {
         })   
     },[]);
 
+    function setDate(annonceDate) {
+        var myDate = new Date(annonceDate);
+        return (
+          myDate.getDate() +
+          1 +
+          "/" +
+          myDate.getMonth() +
+          "/" +
+          myDate.getFullYear()
+        );
+      }
+
     return (
         <div>
             <Navbar/>
@@ -23,7 +35,7 @@ const Profil = () => {
             <div>Prenom : {utilisateur.Prenom}</div> 
             <div>Email : {utilisateur.Email}</div> 
             <div>Sexe : {utilisateur.Sexe}</div> 
-            <div>Date de naissance : {utilisateur.Birthdate}</div> 
+            <div>Date de naissance : {setDate(utilisateur.Birthdate)}</div> 
             <div>Numéro de téléphone : {utilisateur.Phone}</div>
             <div>Consulter mon <a href='/historique'>historique</a></div></>
             : <>Profil non trouvé veuillez vous <a href='/connexion'>connecter</a> ou vous <a href='/inscription'>inscrire</a>.</>}            

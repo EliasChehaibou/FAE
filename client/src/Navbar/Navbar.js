@@ -1,15 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import "./Navbar.css"
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
 
 export default function Navbar() {
   const [ID, setID] = useState(null);
   const [IDA, setIDA] = useState(null);
 
-
-
-  let navigate = useNavigate();
 
   useEffect( () => {
       setID(ReactSession.get("IDUtilisateur"));
@@ -18,8 +15,8 @@ export default function Navbar() {
   }, [])
 
   function handleDeco(){
-    ReactSession.set("IDUtilisateur", null);
-    ReactSession.set("IDAdmin", null);
+    ReactSession.remove('IDUtilisateur');
+    ReactSession.remove('IDAdmin');
     window.location.reload();
     alert('Vous avez été déconnecté !')
   }

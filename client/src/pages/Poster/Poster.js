@@ -11,6 +11,7 @@ const Poster = () => {
   const [categories, setCategories] = useState([]);
   const [dateFin, setDateFin] = useState([]);
   const [selectedFile, setSelectedFile] = useState();
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     searchCategories().then((response) => {
@@ -30,6 +31,18 @@ const Poster = () => {
   }
   function Verification(e) {
     e.preventDefault();
+    if (isAchim =="1") {
+      var enchere = document.getElementById('enchdep').value;
+      var option = document.getElementById('achim').value;
+      if (enchere>=option) {
+        setError(true);
+        return false;
+      }
+    }
+    
+
+
+
     var myForm = document.getElementById("form");
     let formData = new FormData(myForm);
 
@@ -54,7 +67,7 @@ const Poster = () => {
       {IDUtilisateur != null ? (
         <>
           {!isPoste && (
-            <section  className="vh-100" style={{backgroundColor: "#eee"}}>
+            <section  className="100%" style={{minHeight:"100vh", backgroundColor: "#eee"}}>
             <div  className="container h-100" style={{display: 'flex', justifyContent: 'center'}}>
                 <div className="row d-flex justify-content-center align-items-center h-100">
                     <div className="col-lg-12 col-xl-11" style={{minWidth: '150%'}}>
@@ -80,7 +93,7 @@ const Poster = () => {
                                           <div className="d-flex flex-row align-items-center mb-4">
                                             <div className="form-outline flex-fill mb-0">
                                                 <label className="form-label" htmlFor="enchdep" >Prix de départ*</label>
-                                                <input type="number" id="enchdep" name="EnchereDepart" className="form-control" required/>       
+                                                <input type="number" min="1" id="enchdep" name="EnchereDepart" className="form-control" required/>       
                                             </div>
                                           </div>
                                           <div className="col-md-6 mb-4" onChange={handleAchIm}>
@@ -112,7 +125,7 @@ const Poster = () => {
                                           </div>
                                           <div className="input-group date" data-provide="datepicker" style={{display:"grid"}}>
                                               <label className="form-label" htmlFor="ddf">Date de fin de la vente*</label>
-                                              <input className="form-control" type="date" id="ddf" name="Datefin" style={{minWidth:"100%",marginBottom:'5%'}}/>
+                                              <input className="form-control" type="date" id="ddf" name="Datefin" min="2022-07-01" style={{minWidth:"100%",marginBottom:'5%'}}/>
                                           </div>
                                           <div className="d-flex flex-row align-items-center mb-4">
                                               <div className="form-outline flex-fill mb-0">
@@ -124,6 +137,10 @@ const Poster = () => {
                                             <input type='submit' className="btn btn-primary btn-lg" value="Poster l'annonce"/>
                                           </div>
                                           <p>*Champs obligatoires</p>
+                                          {error && 
+                                            <div class="alert alert-danger" role="alert">
+                                            L'option d'achat doit être strictement supérieure au prix de départ.
+                                            </div>}
                                         </form>
                                         </div>
                                     </div>
