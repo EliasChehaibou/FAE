@@ -100,11 +100,11 @@ const Poster = () => {
                                             <h6 className="mb-2 pb-1">Voulez-vous inclure une option d'achat immédiat ?</h6>
                                             <div className="form-check form-check-inline">
                                               <input className="form-check-input" type="radio" name="isAchIm" id="oui" value="1"/>
-                                              <label className="form-check-label" for="oui">Oui</label>
+                                              <label className="form-check-label" htmlFor="oui">Oui</label>
                                             </div>
                                             <div className="form-check form-check-inline">
                                               <input className="form-check-input" type="radio" name="isAchIm" id="non" value="0" defaultChecked/>
-                                              <label className="form-check-label" for="non">Non</label>
+                                              <label className="form-check-label" htmlFor="non">Non</label>
                                             </div>
                                           </div>
                                           {isAchim == "1" && (

@@ -27,9 +27,6 @@ const Detail = () => {
   let enchereValid = false;
   const navigate = useNavigate();
   const socket = io("http://localhost:2001");
-  socket.on("hello", (arg) => {
-    console.log(arg); // world
-  });
 
   useEffect(() => {
     searchDetail(IDAnnonce).then((response) => {

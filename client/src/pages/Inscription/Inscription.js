@@ -74,7 +74,7 @@ const Inscription = () => {
             {!IDUtilisateur ?
             <>
             {!isOk &&
-            <section className="vh-100" style={{backgroundColor: "#eee"}}>
+            <section className="100%" style={{backgroundColor: "#eee", minHeight:"100vh"}}>
                 <div className="container h-100" style={{display: 'flex', justifyContent: 'center'}}>
                     <div className="row d-flex justify-content-center align-items-center h-100">
                         <div className="col-lg-12 col-xl-11" style={{minWidth: '150%'}}>
